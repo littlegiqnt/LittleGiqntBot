@@ -1,0 +1,23 @@
+{
+    "jsc": {
+        "parser": {
+            "syntax": "typescript",
+            "dynamicImport": true
+        },
+        "baseUrl": "./src/",
+        "target": "es2022",
+        "minify": {
+            "compress": {
+                "arguments": true,
+                "dead_code": true,
+                "reduce_funcs": true,
+                "unused": true
+            }
+        }
+    },
+    "isModule": true,
+    "minify": true,
+    "module": {
+        "type": "commonjs"
+    }
+}
