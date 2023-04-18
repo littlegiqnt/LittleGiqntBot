@@ -2,7 +2,6 @@ version: "3.9"
 
 services:
   bot:
-    container_name: kua_bot
     build: ./
     networks:
       - kua
@@ -11,7 +10,6 @@ services:
     environment:
       - TZ=Asia/Seoul
   db:
-    container_name: kua_db
     image: mongo:4.4.18
     networks:
       - kua

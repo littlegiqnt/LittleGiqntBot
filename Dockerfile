@@ -7,6 +7,6 @@ ENV TOKEN=${TOKEN} \
     USER_TOKEN=${USER_TOKEN}
 
 COPY ./ ./
-RUN echo "\nTOKEN=${TOKEN}\nUSER_TOKEN=${USER_TOKEN}" > .env
+RUN echo "\nTOKEN=${TOKEN}" >> .env
 
 ENTRYPOINT npm start
