@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { APISelectMenuOption, ButtonBuilder, ButtonStyle, EmbedBuilder, SelectMenuBuilder, StringSelectMenuBuilder, TextBasedChannel } from "discord.js";
 import { ActionRow } from "structure/ActionRow";
 import { SubCommand } from "structure/interaction/command/SubCommand";
@@ -11,6 +10,7 @@ export default new SubCommand({
 
         if (interaction.channel == null) return;
 
+        await ageSelect(interaction.channel);
         await loveSelect(interaction.channel);
         await dmSelect(interaction.channel);
         await pingRelatedSelect(interaction.channel);
@@ -18,6 +18,7 @@ export default new SubCommand({
     },
 });
 
+// eslint-disable-next-line no-unused-vars
 const genderSelect = async (channel: TextBasedChannel) => {
     const embed = new EmbedBuilder()
         .setColor(0x0099ff)
