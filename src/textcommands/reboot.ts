@@ -1,7 +1,7 @@
 import { TextCommand } from "structure/TextCommand";
 
 export default new TextCommand({
-    name: "eval",
+    name: "reboot",
     async execute(msg) {
         if (msg.author.id !== "454927000490999809") {
             return;

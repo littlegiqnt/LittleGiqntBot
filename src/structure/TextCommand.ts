@@ -14,8 +14,9 @@ export class TextCommand {
         this._execute = options.execute;
     }
     public isMine(msg: Message): boolean {
+        console.debug((PREFIX + this.name).toLowerCase());
         return msg.content.toLowerCase()
-            .startsWith(PREFIX + this.name.toLowerCase())
+            .startsWith((PREFIX + this.name).toLowerCase())
             && msg.content.slice(PREFIX.length) != null;
     }
     public execute(msg: Message) {
