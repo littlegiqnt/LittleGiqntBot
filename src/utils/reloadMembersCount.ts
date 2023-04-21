@@ -6,5 +6,5 @@ export default async (client: Client) => {
     await guild.fetch();
     const memberCountChannel = guild.channels.cache.get("1023190822692323369");
     if (memberCountChannel == null) return;
-    memberCountChannel.setName(`『👤｜${guild.memberCount}명』`);
+    memberCountChannel.setName(`👤｜${guild.memberCount}명`);
 };

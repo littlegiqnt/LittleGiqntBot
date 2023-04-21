@@ -1,4 +1,3 @@
-import { NAME } from "config";
 import { ActivityType } from "discord.js";
 import logger from "structure/Logger";
 import rolesManager from "structure/RolesManager";
@@ -8,7 +7,8 @@ import reloadMembersCount from "utils/reloadMembersCount";
 import createReadyEventListener from "./createReadyEventListener";
 
 export default createReadyEventListener(async (client) => {
-    client.user.setActivity(`${NAME} 서버 전용 봇`, { type: ActivityType.Playing });
+    client.user.setActivity("응애", { type: ActivityType.Playing });
+    client.user.setStatus("dnd");
 
     if (isProduction()) {
         const devChannel = client.channels.cache.get("1024959239384477726")!;

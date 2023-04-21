@@ -2,7 +2,7 @@ import type {
     ApplicationCommandOptionData as CommandArg,
     ApplicationCommandSubCommandData as SubCommandArg,
     ApplicationCommandSubGroupData as SubGroupArg,
-    ChatInputCommandInteraction
+    ChatInputCommandInteraction,
 } from "discord.js";
 import LocaleOption from "utils/types/LocaleOption";
 import Locales from "utils/types/LocaleOptionWithEn";

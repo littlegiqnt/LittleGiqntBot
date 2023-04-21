@@ -1,7 +1,7 @@
 import type { GuildMember } from "discord.js";
 import logger from "structure/Logger";
 import rolesManager from "structure/RolesManager";
-import reloadMembersCount from "../../utils/reloadMembersCount";
+import reloadMembersCount from "utils/reloadMembersCount";
 import createGuildMemberAddEventListener from "./createGuildMemberAddEventListener";
 
 export default createGuildMemberAddEventListener(async (member: GuildMember) => {

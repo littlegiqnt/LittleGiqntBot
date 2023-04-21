@@ -1,4 +1,4 @@
-import { APISelectMenuOption, ButtonBuilder, ButtonStyle, EmbedBuilder, SelectMenuBuilder, StringSelectMenuBuilder, TextBasedChannel } from "discord.js";
+import { APISelectMenuOption, ButtonBuilder, ButtonStyle, EmbedBuilder, StringSelectMenuBuilder, TextBasedChannel } from "discord.js";
 import { ActionRow } from "structure/ActionRow";
 import { SubCommand } from "structure/interaction/command/SubCommand";
 
@@ -10,7 +10,6 @@ export default new SubCommand({
 
         if (interaction.channel == null) return;
 
-        await ageSelect(interaction.channel);
         await loveSelect(interaction.channel);
         await dmSelect(interaction.channel);
         await pingRelatedSelect(interaction.channel);
@@ -39,6 +38,7 @@ const genderSelect = async (channel: TextBasedChannel) => {
     return channel.send({ embeds: [embed], components: [row] });
 };
 
+// eslint-disable-next-line no-unused-vars
 const ageSelect = async (channel: TextBasedChannel) => {
     const embed = new EmbedBuilder()
         .setColor(0x0099ff)
@@ -177,7 +177,7 @@ const gamesSelect = async (channel: TextBasedChannel) => {
             value: "steam",
         },
     ];
-    const row1 = new ActionRow<SelectMenuBuilder>(
+    const row1 = new ActionRow<StringSelectMenuBuilder>(
         new StringSelectMenuBuilder()
             .setCustomId("selectroles_games")
             .setPlaceholder("게임들을 고르세요!")

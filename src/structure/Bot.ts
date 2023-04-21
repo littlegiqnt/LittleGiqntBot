@@ -4,13 +4,9 @@ import type { AllEventListener } from "./EventListener";
 
 export interface BotOptions extends Omit<ClientOptions, "intents"> {
     readonly token: string
-    readonly prefix?: string
     readonly intents?: Array<Intents>
 }
 export default class Bot extends Client {
-
-    public readonly prefix: string | null;
-
     public constructor(options: BotOptions) {
         super({
             ...options,
@@ -27,7 +23,6 @@ export default class Bot extends Client {
             ],
         });
         this.token = options.token;
-        this.prefix = options.prefix ?? null;
     }
 
     public registerEvents(events: Array<Array<AllEventListener>>) {
