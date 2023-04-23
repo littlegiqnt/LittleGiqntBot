@@ -2,11 +2,9 @@ FROM node:lts-alpine AS base
 
 WORKDIR /bot
 ARG TOKEN
-ARG USER_TOKEN
-ENV TOKEN=${TOKEN} \
-    USER_TOKEN=${USER_TOKEN}
+ENV TOKEN=${TOKEN}
 
-COPY ./ ./
+COPY dist/ node_modules/ .env package.json ./
 RUN echo "\nTOKEN=${TOKEN}" >> .env
 
 ENTRYPOINT npm start
