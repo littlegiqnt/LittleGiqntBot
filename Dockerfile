@@ -4,7 +4,9 @@ WORKDIR /bot
 ARG TOKEN
 ENV TOKEN=${TOKEN}
 
-COPY dist/ node_modules/ package.json ./
+COPY dist/ ./
+COPY node_modules/ ./
+COPY package.json ./
 RUN echo "\nTOKEN=${TOKEN}" >> .env
 
 CMD NODE_ENV=production NODE_PATH=./dist node dist/index.js
