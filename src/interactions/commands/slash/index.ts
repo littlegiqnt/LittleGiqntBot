@@ -4,7 +4,15 @@ import clear from "./clear";
 import couple from "./couple";
 import ping from "./ping";
 import setup from "./setup";
+import say from "./say";
 
-const commands: Array<SlashCommand> = [ping, setup, couple, clear, birthday];
+const commands: Array<SlashCommand> = [
+    ping,
+    setup,
+    couple,
+    clear,
+    birthday,
+    say,
+];
 
 export default commands;
