@@ -4,7 +4,7 @@ WORKDIR /bot
 ARG TOKEN
 ENV TOKEN=${TOKEN}
 
-COPY dist/ node_modules/ .env package.json ./
+COPY dist/ node_modules/ package.json ./
 RUN echo "\nTOKEN=${TOKEN}" >> .env
 
 ENTRYPOINT npm start
