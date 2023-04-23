@@ -4,8 +4,8 @@ WORKDIR /bot
 ARG TOKEN
 ENV TOKEN=${TOKEN}
 
-COPY dist/ ./
-COPY node_modules/ ./
+COPY dist/ ./dist/
+COPY node_modules/ ./node_modules/
 COPY package.json ./
 RUN echo "\nTOKEN=${TOKEN}" >> .env
 
