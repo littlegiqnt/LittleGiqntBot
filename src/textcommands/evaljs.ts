@@ -3,7 +3,7 @@ import { TextCommand } from "structure/TextCommand";
 import isProduction from "utils/isProduction";
 
 export default new TextCommand({
-    const name: isProduction()
+    name: isProduction()
         ? "eval"
         : "testeval",
     async execute(msg, args) {
