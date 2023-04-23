@@ -7,4 +7,4 @@ ENV TOKEN=${TOKEN}
 COPY dist/ node_modules/ package.json ./
 RUN echo "\nTOKEN=${TOKEN}" >> .env
 
-ENTRYPOINT npm start
+CMD NODE_ENV=production NODE_PATH=./dist node dist/index.js
