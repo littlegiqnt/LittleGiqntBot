@@ -9,7 +9,7 @@ const baseConfig = {
         ecmaVersion: "latest",
     },
     plugins: ["@typescript-eslint"],
-    extends: ["eslint:recommended"],
+    extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
     env: {
         node: true,
         es2022: true,

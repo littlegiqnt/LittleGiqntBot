@@ -25,21 +25,15 @@ class Logger {
     }
 
     public async error(error: unknown) {
-        if (!(error instanceof Error)) {
-            return;
-        }
         if (isProduction()) {
-            try {
-                const embed = new EmbedBuilder()
-                    .setColor(0xff5733)
-                    .setTitle("오류 발생!")
-                    .setDescription(`**${error.message}**\n${error.stack}`);
-                await this.devChannel?.send({ embeds: [embed] });
-            } catch (e) {
-                console.log(error);
-                console.log(e);
-                return;
-            }
+            const embed = new EmbedBuilder()
+                .setColor(0xff5733)
+                .setTitle("오류 발생!")
+                .setDescription(
+                    (error instanceof Error)
+                        ? `**${error.message}**\n${error.stack}`
+                        : `${String(error)}`);
+            await this.devChannel?.send({ embeds: [embed] });
         } else {
             console.log(error);
         }
@@ -69,9 +63,9 @@ class Logger {
                     + `**Created At**: <t:${Math.floor(
                         member.user.createdAt.getTime() / 1000,
                     )}:F>\n`
-                    + `**Joined At**: <t:${Math.floor(
-                        member.joinedAt!.getTime() / 1000,
-                    )}:F>`,
+                    + `**Joined At**: ${member.joinedAt != null
+                        ? `<t:${Math.floor(member.joinedAt.getTime() / 1000)}:F>`
+                        : "unknown"}`,
             )
             .setThumbnail(member.displayAvatarURL());
         const welcomeEmbed = new EmbedBuilder()
@@ -99,9 +93,9 @@ class Logger {
                     + `**Created At**: <t:${Math.floor(
                         member.user.createdAt.getTime() / 1000,
                     )}:F>\n`
-                    + `**Joined At**: <t:${Math.floor(
-                        member.joinedAt!.getTime() / 1000,
-                    )}:F>`,
+                    + `**Joined At**: ${member.joinedAt != null
+                        ? `<t:${Math.floor(member.joinedAt.getTime() / 1000)}:F>`
+                        : "unknown"}`,
             )
             .setThumbnail(member.displayAvatarURL());
         return this.userLogChannel?.send({ embeds: [logEmbed] });
@@ -118,9 +112,9 @@ class Logger {
                     + `**Created At**: <t:${Math.floor(
                         member.user.createdAt.getTime() / 1000,
                     )}:F>\n`
-                    + `**Joined At**: <t:${Math.floor(
-                        member.joinedAt!.getTime() / 1000,
-                    )}:F>`,
+                    + `**Joined At**: ${member.joinedAt != null
+                        ? `<t:${Math.floor(member.joinedAt.getTime() / 1000)}:F>`
+                        : "unknown"}`,
             )
             .setThumbnail(member.displayAvatarURL());
 
