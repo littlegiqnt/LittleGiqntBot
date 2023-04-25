@@ -1,3 +1,4 @@
+import { OWNER_ID } from "config";
 import { EmbedBuilder, escapeMarkdown } from "discord.js";
 import { TextCommand } from "structure/TextCommand";
 import isProduction from "utils/isProduction";
@@ -7,7 +8,7 @@ export default new TextCommand({
         ? "eval"
         : "testeval",
     async execute(msg, args) {
-        if (msg.author.id !== "454927000490999809") {
+        if (msg.author.id !== OWNER_ID) {
             return;
         }
         try {

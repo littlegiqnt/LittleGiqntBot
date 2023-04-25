@@ -3,8 +3,9 @@ import birthday from "./birthday";
 import clear from "./clear";
 import couple from "./couple";
 import ping from "./ping";
-import setup from "./setup";
 import say from "./say";
+import setup from "./setup";
+import test from "./test";
 
 const commands: Array<SlashCommand> = [
     ping,
@@ -13,6 +14,7 @@ const commands: Array<SlashCommand> = [
     clear,
     birthday,
     say,
+    test,
 ];
 
 export default commands;

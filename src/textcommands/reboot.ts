@@ -1,9 +1,10 @@
+import { OWNER_ID } from "config";
 import { TextCommand } from "structure/TextCommand";
 
 export default new TextCommand({
     name: "reboot",
     async execute(msg) {
-        if (msg.author.id !== "454927000490999809") {
+        if (msg.author.id !== OWNER_ID) {
             return;
         }
         await msg.reply({ content: "끄아악 죽는다" });

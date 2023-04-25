@@ -1,10 +1,25 @@
+import { Client } from "discord.js";
 import { scheduleJob } from "node-schedule";
+import dbManager from "structure/DBManager";
 import createReadyEventListener from "./createReadyEventListener";
 
-export default createReadyEventListener(async () => {
-    scheduleJob("0 0 * * *", onEveryDay);
+export default createReadyEventListener(async (client) => {
+    scheduleJob("0 0 * * *", () => onEveryDay(client));
 });
 
-const onEveryDay = async () => {
-    // logger.debug(`${new Intl.DateTimeFormat("ko-KR", { dateStyle: "short", timeStyle: "medium" }).format(Date.now())}`);
+export const onEveryDay = async (client: Client) => {
+    const today = new Date();
+    const month = today.getMonth() + 1;
+    const day = today.getDate();
+    console.log(`${month}월 ${day}일`);
+    const users = await dbManager.User.find({
+        birthday: {
+            month: month,
+            day: day,
+        },
+    });
+    for (const u of users) {
+        const user = client.users.cache.get(u.id) ?? await client.users.fetch(u.id);
+        console.log(user.tag);
+    }
 };
