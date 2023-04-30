@@ -3,8 +3,6 @@ import type { Client, Role } from "discord.js";
 type RolesIdType = Record<string, string>;
 
 class RolesManager {
-    private roles: Record<string, Role> = {};
-
     private readonly rolesIdGroups = {
         dividers: {
             dividerRoleProfile: "1023196714078830705",
@@ -47,6 +45,8 @@ class RolesManager {
         ...this.rolesIdGroups.games,
     } satisfies RolesIdType;
 
+    private roles: Partial<Record<keyof typeof this.rolesId, Role>> = {};
+
     public constructor(private guildId: string) {}
 
     public async load(client: Client) {
@@ -55,12 +55,12 @@ class RolesManager {
         const roles = await guild.roles.fetch();
         Object.entries(this.rolesId)
             .forEach(([name, id]) => {
-                this.roles[name] = roles.get(id)!;
+                this.roles[name as keyof typeof this.rolesId] = roles.get(id)!;
             });
     }
 
-    public get(name: keyof typeof this.rolesId): Role {
-        return this.roles[name];
+    public get(name: keyof typeof this["rolesId"]): Role {
+        return this.roles[name]!;
     }
 
     public getId(name: keyof typeof this.rolesId): string {
