@@ -29,6 +29,7 @@ export const onEveryDay = async (client: Client) => {
         if (member == null) continue;
         specialUsers.push(member);
     }
+    if (specialUsers.length <= 0) return;
 
     const channel = guild.channels.cache.get("1100430961243586723");
     if (channel == null || !isNormalTextChannel(channel)) {
