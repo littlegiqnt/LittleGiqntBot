@@ -17,10 +17,10 @@ export default new SubCommand({
     },
 });
 
-// eslint-disable-next-line no-unused-vars
+// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
 const genderSelect = async (channel: TextBasedChannel) => {
     const embed = new EmbedBuilder()
-        .setColor(0x0099ff)
+        .setColor("Blue")
         .setTitle(":restroom: 『성별선택』")
         .setDescription("본인의 성별을 선택해 주세요");
     const row = new ActionRow(
@@ -38,10 +38,10 @@ const genderSelect = async (channel: TextBasedChannel) => {
     return channel.send({ embeds: [embed], components: [row] });
 };
 
-// eslint-disable-next-line no-unused-vars
+// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
 const ageSelect = async (channel: TextBasedChannel) => {
     const embed = new EmbedBuilder()
-        .setColor(0x0099ff)
+        .setColor("Blue")
         .setTitle("⏱️ 『나이대 선택』")
         .setDescription("본인의 나이를 선택해 주세요");
     const row = new ActionRow(
@@ -66,7 +66,7 @@ const ageSelect = async (channel: TextBasedChannel) => {
 
 const loveSelect = async (channel: TextBasedChannel) => {
     const embed = new EmbedBuilder()
-        .setColor(0x0099ff)
+        .setColor("Blue")
         .setTitle("🧡 『애인 유무』")
         .setDescription("현재 상태를 선택해 주세요");
     const row = new ActionRow(
@@ -96,7 +96,7 @@ const loveSelect = async (channel: TextBasedChannel) => {
 
 const dmSelect = async (channel: TextBasedChannel) => {
     const embed = new EmbedBuilder()
-        .setColor(0x0099ff)
+        .setColor("Blue")
         .setTitle("📨 『DM 여부』")
         .setDescription("DM을 허용 여부를 선택해 주세요");
     const row = new ActionRow(
@@ -116,7 +116,7 @@ const dmSelect = async (channel: TextBasedChannel) => {
 
 const pingRelatedSelect = async (channel: TextBasedChannel) => {
     const embed = new EmbedBuilder()
-        .setColor(0x0099ff)
+        .setColor("Blue")
         .setTitle("📌 『알람 관련』 (선택)")
         .setDescription("알람 관련된 역할을 선택해 주세요");
     const row = new ActionRow(
@@ -136,7 +136,7 @@ const pingRelatedSelect = async (channel: TextBasedChannel) => {
 
 const gamesSelect = async (channel: TextBasedChannel) => {
     const embed = new EmbedBuilder()
-        .setColor(0x0099ff)
+        .setColor("Blue")
         .setTitle("🎮 『게임 선택』 (선택)")
         .setDescription("플레이 하시는 게임들을 선택해 주세요");
     const options: Array<APISelectMenuOption> = [

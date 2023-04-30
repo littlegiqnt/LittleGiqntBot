@@ -33,7 +33,7 @@ export default new SubCommand({
         );
 
         const embed = new EmbedBuilder()
-            .setColor(0x0099ff)
+            .setColor("Blue")
             .setTitle("버튼 스타일 목록")
             .setDescription("버튼 스타일들 목록!");
 

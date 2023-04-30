@@ -17,7 +17,7 @@ export default new SubCommand({
 
 const send = async (channel: TextChannel) => {
     const embed = new EmbedBuilder()
-        .setColor(0xff7f00)
+        .setColor("DarkOrange")
         .setTitle("✨《KUA》에 오신것을 환영해요!")
         .setDescription(
             "이 서버는 유저들의 __자유로운 소통과 친목__을 위한 종합 게임 커뮤니티 서버에요!\n"

@@ -19,6 +19,7 @@ export default new SlashCommand({
         interaction.reply({
             ephemeral: true,
             content: "✓",
-        });
+        })
+            .then(() => interaction.deleteReply());
     },
 });
