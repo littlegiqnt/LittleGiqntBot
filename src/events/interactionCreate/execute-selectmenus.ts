@@ -26,7 +26,7 @@ const processSelectGames = async (interaction: StringSelectMenuInteraction) => {
 
     const rolesToAdd: Array<Role> = [];
     interaction.values.forEach((value: string) => {
-        const role = rolesManager.get(value) ?? null;
+        const role = rolesManager.get(value as keyof typeof rolesManager.rolesId) ?? null;
         if (role == null) return;
         rolesToAdd.push(role);
     });

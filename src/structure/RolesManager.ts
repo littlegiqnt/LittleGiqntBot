@@ -1,12 +1,11 @@
 import { GUILD_ID } from "config";
 import type { Client, Role } from "discord.js";
-type RolesType = Record<string, Role>;
 type RolesIdType = Record<string, string>;
 
 class RolesManager {
-    private roles: RolesType = {};
+    private roles: Record<string, Role> = {};
 
-    private rolesIdGroups: Record<string, RolesIdType> = {
+    private readonly rolesIdGroups = {
         dividers: {
             dividerRoleProfile: "1023196714078830705",
             dividerRoleNotice: "1024229642598621195",
@@ -24,9 +23,9 @@ class RolesManager {
             minecraft: "1024239931951939625",
             steam: "1024241637423075429",
         },
-    };
+    } satisfies Record<string, RolesIdType>;
 
-    private rolesId: RolesIdType = {
+    public readonly rolesId = {
         ...this.rolesIdGroups.dividers,
         owner: "1023192476573519912",
         manager: "1023228298907627542",
@@ -46,7 +45,7 @@ class RolesManager {
         dmDisallow: "1024229118583255060",
         giveaway: "1027775934645932093",
         ...this.rolesIdGroups.games,
-    };
+    } satisfies RolesIdType;
 
     public constructor(private guildId: string) {}
 
@@ -54,28 +53,30 @@ class RolesManager {
         const guild = await client.guilds.fetch(this.guildId);
         if (guild == null) return;
         const roles = await guild.roles.fetch();
-        for (const name in this.rolesId) {
-            this.roles[name] = roles.get(this.rolesId[name])!;
-        }
+        Object.entries(this.rolesId)
+            .forEach(([name, id]) => {
+                this.roles[name] = roles.get(id)!;
+            });
     }
 
-    public get(name: string): Role | undefined {
+    public get(name: keyof typeof this.rolesId): Role {
         return this.roles[name];
     }
 
-    public getId(name: string): string {
+    public getId(name: keyof typeof this.rolesId): string {
         return this.rolesId[name];
     }
 
-    public async getGrouped(groupName: string) {
-        const ids: RolesIdType = this.rolesIdGroups[groupName];
+    public async getGrouped(groupName: keyof typeof this.rolesIdGroups) {
+        const ids = this.rolesIdGroups[groupName] satisfies RolesIdType;
         const roles: Array<Role> = [];
-        for (const name of Object.keys(ids)) {
-            const role = this.get(name);
-            if (role != null) {
-                roles.push(role);
-            }
-        }
+        Object.keys(ids)
+            .forEach((name) => {
+                const role = this.get(name as keyof typeof this.rolesId);
+                if (role != null) {
+                    roles.push(role);
+                }
+            });
         return roles;
     }
 }
