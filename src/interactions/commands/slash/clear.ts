@@ -1,4 +1,3 @@
-import { GUILD_ID } from "config";
 import { ApplicationCommandOptionType, EmbedBuilder } from "discord.js";
 import { SlashCommand } from "structure/interaction/command/SlashCommand";
 import { isNormalTextChannel } from "utils/checkChannel";
@@ -26,7 +25,10 @@ export default new SlashCommand({
 
         interaction.deferReply({ ephemeral: true });
 
-        const { size } = await channel.bulkDelete(amount);
+        let size = 0;
+        try {
+            size = (await channel.bulkDelete(amount)).size;
+        } catch (error) {}
 
         const embed = new EmbedBuilder()
             .setColor("Green")
@@ -35,5 +37,4 @@ export default new SlashCommand({
 
         interaction.editReply({ embeds: [embed] });
     },
-    guildId: GUILD_ID,
 });
