@@ -1,11 +1,11 @@
-import type { Client, GuildMember, PartialGuildMember, TextChannel } from "discord.js";
-import { EmbedBuilder, userMention } from "discord.js";
+import { Client, EmbedBuilder, GuildMember, PartialGuildMember, TextChannel, User, codeBlock, userMention } from "discord.js";
 import isProduction from "utils/isProduction";
 
 class Logger {
     private userLogChannel: TextChannel | undefined;
     private devChannel: TextChannel | undefined;
     private mainChatChannel: TextChannel | undefined;
+    private commandLogChannel: TextChannel | undefined;
 
     public init(client: Client) {
         this.userLogChannel = client.channels.cache.get(
@@ -16,6 +16,9 @@ class Logger {
         ) as TextChannel;
         this.mainChatChannel = client.channels.cache.get(
             "1031057694213296159",
+        ) as TextChannel;
+        this.commandLogChannel = client.channels.cache.get(
+            "1102976949623726140",
         ) as TextChannel;
     }
 
@@ -105,6 +108,20 @@ class Logger {
             .setThumbnail(member.displayAvatarURL());
 
         return this.userLogChannel?.send({ embeds: [logEmbed] });
+    }
+
+    public async sayCommand(user: User, message: string) {
+        const logEmbed = new EmbedBuilder()
+            .setColor("Blue")
+            .setTitle(`Say command ${user.tag}`)
+            .setDescription(
+                `${userMention(user.id)}\n`
+                    + `**ID**: ${user.id}\n`
+                    + `**Message**: ${codeBlock(message)}`,
+            )
+            .setThumbnail(user.displayAvatarURL());
+
+        return this.commandLogChannel?.send({ embeds: [logEmbed] });
     }
 }
 
