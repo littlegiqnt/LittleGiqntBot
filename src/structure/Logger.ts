@@ -113,7 +113,7 @@ class Logger {
     public async sayCommand(user: User, message: string) {
         const logEmbed = new EmbedBuilder()
             .setColor("Blue")
-            .setTitle(`Say command ${user.tag}`)
+            .setTitle("/say")
             .setDescription(
                 `${userMention(user.id)}\n`
                     + `**ID**: ${user.id}\n`
