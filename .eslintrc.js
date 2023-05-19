@@ -107,6 +107,11 @@ const rules = {
             selector: "typeLike",
             format: ["StrictPascalCase"],
         },
+        {
+            selector: "classProperty",
+            modifiers: ["readonly"],
+            format: ["strictCamelCase", "UPPER_CASE"],
+        },
     ],
     "@typescript-eslint/no-confusing-void-expression": ["error", { ignoreArrowShorthand: true, ignoreVoidOperator: true }],
     "@typescript-eslint/no-duplicate-enum-values": "error",
