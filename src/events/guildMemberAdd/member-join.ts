@@ -9,7 +9,7 @@ export default createGuildMemberAddEventListener(async (member) => {
     if (member.guild.id !== GUILD_ID) return;
 
     member.roles.add([
-        rolesManager.get("dividerRoleGames"),
+        rolesManager.get("dividerRoleProfile"),
         rolesManager.get("dividerRoleNotice"),
         rolesManager.get("dividerRoleGames"),
         rolesManager.get("dividerRoleUser"),
