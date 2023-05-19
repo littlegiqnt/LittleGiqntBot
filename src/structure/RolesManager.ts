@@ -42,6 +42,7 @@ class RolesManager {
         dmAllow: "1024229137809952778",
         dmDisallow: "1024229118583255060",
         giveaway: "1027775934645932093",
+        nsfwpass: "1108720383747686470",
         ...this.rolesIdGroups.games,
     } satisfies RolesIdType;
 

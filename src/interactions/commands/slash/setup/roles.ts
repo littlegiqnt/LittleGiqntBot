@@ -14,6 +14,7 @@ export default new SubCommand({
         await dmSelect(interaction.channel);
         await pingRelatedSelect(interaction.channel);
         await gamesSelect(interaction.channel);
+        await nsfwPass(interaction.channel);
     },
 });
 
@@ -189,4 +190,20 @@ const gamesSelect = async (channel: TextBasedChannel) => {
     );
 
     return channel.send({ embeds: [embed], components: [row1] });
+};
+
+const nsfwPass = async (channel: TextBasedChannel) => {
+    const embed = new EmbedBuilder()
+        .setColor("Red")
+        .setTitle("🔞 『위험구역 출입증』")
+        .setDescription("위험구역에서는 대한민국 법을 위반하지 않는 한 어떠한 행위도 제재하지 않습니다.\n"
+                        + "출입증을 얻은 상태에서 한번 더 누르시면 제거됩니다.");
+    const row = new ActionRow(
+        new ButtonBuilder()
+            .setCustomId("selectroles_nsfwpass")
+            .setEmoji("🔞")
+            .setLabel("출입증 받기")
+            .setStyle(ButtonStyle.Primary),
+    );
+    return channel.send({ embeds: [embed], components: [row] });
 };

@@ -121,12 +121,17 @@ const processSelectRoles = (interaction: MessageComponentInteraction) => {
             }
             case "selectroles_announcement": {
                 const role: Role = rolesManager.get("announcement");
-                handlePingRole(role, member, interaction);
+                handleSelectableRole(role, member, interaction);
                 return;
             }
             case "selectroles_giveaway": {
                 const role: Role = rolesManager.get("giveaway");
-                handlePingRole(role, member, interaction);
+                handleSelectableRole(role, member, interaction);
+                return;
+            }
+            case "selectroles_nsfwpass": {
+                const role: Role = rolesManager.get("nsfwpass");
+                handleSelectableRole(role, member, interaction);
                 return;
             }
             default: {
@@ -139,7 +144,7 @@ const processSelectRoles = (interaction: MessageComponentInteraction) => {
     });
 };
 
-const handlePingRole = async (role: Role, member: GuildMember, interaction: MessageComponentInteraction) => {
+const handleSelectableRole = async (role: Role, member: GuildMember, interaction: MessageComponentInteraction) => {
     if (member.roles.cache.has(role.id)) {
         await member.roles.remove(role);
         interaction.editReply({ content: "➖ 해당 역할을 제거했어요!" });
