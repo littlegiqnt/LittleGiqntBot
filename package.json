@@ -6,7 +6,7 @@
     "build": "swc ./src -d dist",
     "dev": "rm -rf ./dist && swc ./src -d dist && concurrently -n W: \"npm:watch-*\"",
     "watch-swc": "swc ./src -d dist --watch",
-    "watch-node": "cross-env NODE_ENV=development NODE_PATH=./dist nodemon ./dist/index.js"
+    "watch-node": "cross-env NODE_ENV=development NODE_PATH=./dist nodemon --watch dist ./dist/index.js"
   },
   "devDependencies": {
     "@swc-node/register": "^1.6.5",

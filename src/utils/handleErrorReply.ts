@@ -19,7 +19,7 @@ export default async (error: unknown, replyTo?: BaseInteraction | Message) => {
         if (replyTo.deferred || replyTo.replied) {
             replyTo.editReply({ embeds: [embed] });
         } else {
-            replyTo.reply({ embeds: [embed] });
+            replyTo.reply({ embeds: [embed], ephemeral: true });
         }
     }
 };

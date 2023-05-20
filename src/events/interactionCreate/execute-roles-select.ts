@@ -1,5 +1,5 @@
 /* eslint-disable no-lonely-if */
-import type { MessageComponentInteraction, Role } from "discord.js";
+import type { ButtonInteraction, MessageComponentInteraction, Role } from "discord.js";
 import { GuildMember } from "discord.js";
 import rolesManager from "structure/RolesManager";
 import TaskQueue from "structure/TaskQueue";
@@ -16,7 +16,7 @@ export default createInteractionCreateEventListener(async (interaction) => {
 
 const workQueue = new Map<string, TaskQueue>();
 
-const processSelectRoles = (interaction: MessageComponentInteraction) => {
+const processSelectRoles = (interaction: ButtonInteraction) => {
     let queue = workQueue.get(interaction.user.id);
     if (queue == null) {
         queue = new TaskQueue();

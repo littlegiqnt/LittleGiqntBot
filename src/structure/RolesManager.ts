@@ -60,7 +60,7 @@ class RolesManager {
             });
     }
 
-    public get(name: keyof typeof this["rolesId"]): Role {
+    public get(name: keyof typeof this.rolesId): Role {
         return this.roles[name]!;
     }
 
