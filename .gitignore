@@ -1,8 +1,4 @@
-.clinic
-.env
-build/
 dbdata
-debug.json
 dist/
 node_modules/
-package-lock.json
+.env
