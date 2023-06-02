@@ -8,10 +8,14 @@ export interface IUser {
         month: number
         day: number
     }
+    selfbot: {
+        token?: string
+    }
 }
 
 export const userSchema = new Schema<IUser>({
     _id: String,
     coupleSince: { type: Date, required: false },
     birthday: { month: Number, day: Number },
+    selfbot: { token: { type: String, required: false } },
 });
