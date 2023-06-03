@@ -25,5 +25,7 @@ export class SelfBot {
             throw new Error("유저 아이디가 일치하지 않아 실패");
         }
         console.log(`[SelfBot] ${this.userId} ${this.client.user.tag} : 로그인 성공`);
+        this.client.user.setStatus("idle");
+        this.client.user.setAFK(true);
     }
 }
