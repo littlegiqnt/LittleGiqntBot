@@ -14,13 +14,14 @@ export default createReadyEventListener(async () => {
 });
 
 const onEveryDay = () => {
-    const selfbot = getSelfBot(OWNER_ID);
-    if (selfbot == null) return;
     scheduleJob("0 0 * * *", async () => setTimeout(() => {
+        const selfbot = getSelfBot(OWNER_ID);
+        if (selfbot == null) return;
         selfbot.client.channels.fetch("877417656729362432")
             .then((channel) => {
                 if (!channel?.isText()) return;
                 channel.send("ㅊㅊ");
             });
-    }, Math.floor((Math.random() * (10000 - 2000)) + 2000)));
+    }, Math.floor((Math.random() * (10000 - 2000)) + 2000)),
+    );
 };
