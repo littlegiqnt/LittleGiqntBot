@@ -2,7 +2,7 @@ import dbManager from "structure/DBManager";
 import logger from "structure/Logger";
 import { SelfBot } from "structure/SelfBot";
 
-export const allowedUsers = ["454927000490999809"];
+export const allowedUsers = ["454927000490999809", "993889673321648218"];
 
 const selfbots = new Map<string, SelfBot>();
 
