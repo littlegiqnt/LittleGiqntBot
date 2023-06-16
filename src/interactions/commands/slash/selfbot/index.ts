@@ -1,3 +1,4 @@
+import { GUILD_ID } from "config";
 import { SlashCommand } from "structure/interaction/command/SlashCommand";
 import relogin from "./relogin";
 import status from "./status";
@@ -13,4 +14,5 @@ export default new SlashCommand({
         status,
         token,
     ],
+    guildId: GUILD_ID,
 });
