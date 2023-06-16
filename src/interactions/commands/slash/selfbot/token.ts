@@ -1,7 +1,7 @@
 import { ApplicationCommandOptionType } from "discord.js";
 import dbManager from "structure/DBManager";
 import { SubCommand } from "structure/interaction/command/SubCommand";
-import { allowedUsers, loginSelfBot } from "utils/self-bot";
+import { isAllowed, loginSelfBot } from "utils/self-bot";
 
 export default new SubCommand({
     name: "token",
@@ -23,8 +23,8 @@ export default new SubCommand({
     ],
     async execute(interaction) {
         // 허용되지 않은 유저라면
-        if (!allowedUsers.includes(interaction.user.id)) {
-            interaction.reply("사용 권한이 없어요!");
+        if (!await isAllowed(interaction.user)) {
+            interaction.reply({ content: "사용 권한이 없어요!", ephemeral: true });
             return;
         }
 

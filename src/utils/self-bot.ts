@@ -1,8 +1,8 @@
+import { GUILD_ID } from "config";
+import { GuildMember, User } from "discord.js";
 import dbManager from "structure/DBManager";
 import logger from "structure/Logger";
 import { SelfBot } from "structure/SelfBot";
-
-export const allowedUsers = ["454927000490999809", "993889673321648218"];
 
 const selfbots = new Map<string, SelfBot>();
 
@@ -31,3 +31,11 @@ const removeSelfBot = (userId: string) => {
 };
 
 export const getSelfBot = (userId: string) => selfbots.get(userId);
+
+export const isAllowed = async (user: User | GuildMember): Promise<boolean> => {
+    const member = (user instanceof User)
+        ? await (await user.client.guilds.fetch(GUILD_ID)).members.fetch(user.id)
+        : user;
+
+    return member.roles.cache.has("1119125286672412703");
+};
