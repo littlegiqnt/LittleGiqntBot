@@ -2,6 +2,7 @@ import { OWNER_ID } from "config";
 import { scheduleJob } from "node-schedule";
 import dbManager from "structure/DBManager";
 import { getSelfBot, loginSelfBot } from "utils/self-bot";
+import { getRandomInt } from "utils/utils";
 import createReadyEventListener from "./createReadyEventListener";
 
 export default createReadyEventListener(async () => {
@@ -22,6 +23,6 @@ const onEveryDay = () => {
                 if (!channel?.isText()) return;
                 channel.send("ㅊㅊ");
             });
-    }, Math.floor((Math.random() * (10000 - 2000)) + 2000)),
+    }, Math.floor(getRandomInt(2000, 13000))),
     );
 };
