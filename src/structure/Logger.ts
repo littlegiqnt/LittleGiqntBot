@@ -54,7 +54,7 @@ class Logger {
         if (!isProduction()) return null;
         const logEmbed = new EmbedBuilder()
             .setColor("Green")
-            .setTitle(`Join: ${member.user.tag}`)
+            .setTitle(`Join: ${member.user.username}`)
             .setDescription(
                 `${userMention(member.id)}\n`
                     + `**ID**: ${member.id}\n`
@@ -75,7 +75,7 @@ class Logger {
         if (!isProduction()) return null;
         const logEmbed = new EmbedBuilder()
             .setColor("Red")
-            .setTitle(`Quit: ${member.user.tag}`)
+            .setTitle(`Quit: ${member.user.username}`)
             .setDescription(
                 `${userMention(member.id)}\n`
                     + `**ID**: ${member.id}\n`
@@ -94,7 +94,7 @@ class Logger {
         if (!isProduction()) return null;
         const logEmbed = new EmbedBuilder()
             .setColor("Blue")
-            .setTitle(`Verified(Step 1): ${member.user.tag}`)
+            .setTitle(`Verified(Step 1): ${member.user.username}`)
             .setDescription(
                 `${userMention(member.id)}\n`
                     + `**ID**: ${member.id}\n`

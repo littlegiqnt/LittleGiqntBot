@@ -1,6 +1,8 @@
-import { Client } from "discord.js-selfbot-v13";
+import { Client, CustomStatus } from "discord.js-selfbot-v13";
 
 export class SelfBot {
+    protected customStatus?: string;
+
     public readonly client = new Client({
         syncStatus: true,
         checkUpdate: false,
@@ -24,8 +26,24 @@ export class SelfBot {
             console.log(`[SelfBot] ${this.userId} : 유저 아이디가 일치하지 않아 실행 실패`);
             throw new Error("유저 아이디가 일치하지 않아 실패");
         }
-        console.log(`[SelfBot] ${this.userId} ${this.client.user.tag} : 로그인 성공`);
+        console.log(`[SelfBot] ${this.userId} ${this.client.user.username} : 로그인 성공`);
         this.client.user.setStatus("idle");
+        if (this.customStatus != null) {
+            const a = new CustomStatus()
+                .setState(this.customStatus);
+            this.client.user?.setActivity(a);
+        }
         this.client.user.setAFK(true);
+    }
+
+    public setCustomStatus(customStatus: string | undefined) {
+        this.customStatus = customStatus;
+        if (this.client.isReady()) {
+            if (customStatus != null) {
+                const a = new CustomStatus()
+                    .setState(customStatus);
+                this.client.user?.setActivity(a);
+            }
+        }
     }
 }
