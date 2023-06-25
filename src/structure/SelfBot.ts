@@ -36,14 +36,17 @@ export class SelfBot {
         this.client.user.setAFK(true);
     }
 
-    public setCustomStatus(customStatus: string | undefined) {
+    public setCustomStatus(customStatus: string | undefined): boolean {
         this.customStatus = customStatus;
         if (this.client.isReady()) {
             if (customStatus != null) {
                 const a = new CustomStatus()
                     .setState(customStatus);
                 this.client.user?.setActivity(a);
+                this.client.user?.setAFK(true);
+                return true;
             }
         }
+        return false;
     }
 }
