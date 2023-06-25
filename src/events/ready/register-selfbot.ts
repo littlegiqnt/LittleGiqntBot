@@ -5,13 +5,16 @@ import { getSelfBot, loginSelfBot } from "utils/self-bot";
 import { getRandomInt } from "utils/utils";
 import createReadyEventListener from "./createReadyEventListener";
 
-export default createReadyEventListener(async () => {
+export default createReadyEventListener(async (client) => {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     const users = await dbManager.User.find({ "selfbot.token": { $ne: null } });
     users.forEach((user) => {
-        loginSelfBot(user.id);
+        client.users.fetch(user.id)
+            .then((user) => {
+                loginSelfBot(user);
+            });
     });
-    onEveryDay();
+    // onEveryDay();
 });
 
 const onEveryDay = () => {
