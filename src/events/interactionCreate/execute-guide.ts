@@ -2,6 +2,7 @@ import { ButtonBuilder, ButtonInteraction, ButtonStyle, EmbedBuilder, GuildMembe
 import { ActionRow } from "structure/ActionRow";
 import rolesManager from "structure/RolesManager";
 import handleErrorReply from "utils/handleErrorReply";
+import logger from "utils/log";
 import createInteractionCreateEventListener from "./createInteractionCreateEventListener";
 
 export default createInteractionCreateEventListener(async (interaction) => {
@@ -111,6 +112,7 @@ const processGuide = async (interaction: ButtonInteraction) => {
             .setTitle("✔️ 완료")
             .setDescription(`나이를 ${ko}로 설정했어요.\n`
                         + "이제 서버에서 활동하실 수 있어요!");
+        logger.verify(member);
         interaction.update({ embeds: [embed], components: [] });
     }
 };
