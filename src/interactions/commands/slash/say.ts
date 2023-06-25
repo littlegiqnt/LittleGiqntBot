@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionType } from "discord.js";
-import logger from "structure/Logger";
 import { SlashCommand } from "structure/interaction/command/SlashCommand";
+import logger from "utils/log";
 
 export default new SlashCommand({
     name: "say",

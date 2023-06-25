@@ -1,4 +1,4 @@
-import logger from "structure/Logger";
+import logger from "utils/log";
 import isProduction from "./isProduction";
 
 export default async () => {

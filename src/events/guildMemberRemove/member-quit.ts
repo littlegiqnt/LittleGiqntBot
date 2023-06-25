@@ -1,5 +1,5 @@
 import { GUILD_ID } from "config";
-import logger from "structure/Logger";
+import logger from "utils/log";
 import reloadMembersCount from "utils/reloadMembersCount";
 import createGuildMemberRemoveEventListener from "./createGuildMemberRemoveEventListener";
 

@@ -1,4 +1,5 @@
-import { Client, EmbedBuilder, GuildMember, PartialGuildMember, TextChannel, User, codeBlock, userMention } from "discord.js";
+import { Client, EmbedBuilder, GuildMember, PartialGuildMember, TextChannel, User, codeBlock, inlineCode, userMention } from "discord.js";
+import { SelfBot } from "structure/SelfBot";
 import isProduction from "utils/isProduction";
 
 class Logger {
@@ -6,6 +7,7 @@ class Logger {
     private devChannel: TextChannel | undefined;
     private mainChatChannel: TextChannel | undefined;
     private commandLogChannel: TextChannel | undefined;
+    private selfbotLogChannel: TextChannel | undefined;
 
     public init(client: Client) {
         this.userLogChannel = client.channels.cache.get(
@@ -19,6 +21,9 @@ class Logger {
         ) as TextChannel;
         this.commandLogChannel = client.channels.cache.get(
             "1102976949623726140",
+        ) as TextChannel;
+        this.selfbotLogChannel = client.channels.cache.get(
+            "1122386447769534554",
         ) as TextChannel;
     }
 
@@ -65,7 +70,10 @@ class Logger {
                         ? `<t:${Math.floor(member.joinedAt.getTime() / 1000)}:F>`
                         : "unknown"}`,
             )
-            .setThumbnail(member.displayAvatarURL());
+            .setAuthor({
+                name: member.user.username,
+                iconURL: member.displayAvatarURL(),
+            });
         return Promise.all([
             this.userLogChannel?.send({ embeds: [logEmbed] }),
         ]);
@@ -86,15 +94,18 @@ class Logger {
                         ? `<t:${Math.floor(member.joinedAt.getTime() / 1000)}:F>`
                         : "unknown"}`,
             )
-            .setThumbnail(member.displayAvatarURL());
+            .setAuthor({
+                name: member.user.username,
+                iconURL: member.displayAvatarURL(),
+            });
         return this.userLogChannel?.send({ embeds: [logEmbed] });
     }
 
-    public async stepOneVerify(member: GuildMember | PartialGuildMember) {
+    public async verify(member: GuildMember | PartialGuildMember) {
         if (!isProduction()) return null;
         const logEmbed = new EmbedBuilder()
             .setColor("Blue")
-            .setTitle(`Verified(Step 1): ${member.user.username}`)
+            .setTitle(`Verified: ${member.user.username}`)
             .setDescription(
                 `${userMention(member.id)}\n`
                     + `**ID**: ${member.id}\n`
@@ -105,8 +116,10 @@ class Logger {
                         ? `<t:${Math.floor(member.joinedAt.getTime() / 1000)}:F>`
                         : "unknown"}`,
             )
-            .setThumbnail(member.displayAvatarURL());
-
+            .setAuthor({
+                name: member.user.username,
+                iconURL: member.displayAvatarURL(),
+            });
         return this.userLogChannel?.send({ embeds: [logEmbed] });
     }
 
@@ -119,9 +132,45 @@ class Logger {
                     + `**ID**: ${user.id}\n`
                     + `**Message**: ${codeBlock(message)}`,
             )
-            .setThumbnail(user.displayAvatarURL());
-
+            .setAuthor({
+                name: user.username,
+                iconURL: user.displayAvatarURL(),
+            });
         return this.commandLogChannel?.send({ embeds: [logEmbed] });
+    }
+
+    public async selfbotLogin(user: User, selfbot: SelfBot) {
+        const logEmbed = new EmbedBuilder()
+            .setColor("Green")
+            .setTitle("Selfbot Login")
+            .setDescription(
+                `${userMention(user.id)}\n`
+                    + `**ID**: ${user.id}\n`
+                    + `**Username**: ${user.username}\n`
+                    + `**Custom Status**: ${inlineCode(selfbot.getCustomStatus() ?? " ")}`,
+            )
+            .setAuthor({
+                name: user.username,
+                iconURL: user.displayAvatarURL(),
+            });
+        return this.selfbotLogChannel?.send({ embeds: [logEmbed] });
+    }
+
+    public async selfbotCustomStatusChange(user: User, selfbot: SelfBot) {
+        const logEmbed = new EmbedBuilder()
+            .setColor("Orange")
+            .setTitle("Selfbot Custom Status Changed")
+            .setDescription(
+                `${userMention(user.id)}\n`
+                    + `**ID**: ${user.id}\n`
+                    + `**Username**: ${user.username}\n`
+                    + `**Custom Status**: ${inlineCode(selfbot.getCustomStatus() ?? " ")}`,
+            )
+            .setAuthor({
+                name: user.username,
+                iconURL: user.displayAvatarURL(),
+            });
+        return this.selfbotLogChannel?.send({ embeds: [logEmbed] });
     }
 }
 

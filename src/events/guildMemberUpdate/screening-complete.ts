@@ -1,4 +1,4 @@
-import logger from "structure/Logger";
+import logger from "utils/log";
 import createGuildMemberUpdateEventListener from "./createGuildMemberUpdate";
 
 export default createGuildMemberUpdateEventListener(async (oldMember, member) => {

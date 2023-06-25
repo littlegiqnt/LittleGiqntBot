@@ -2,8 +2,8 @@ import { GUILD_ID } from "config";
 import { Client, EmbedBuilder, GuildMember, userMention } from "discord.js";
 import { scheduleJob } from "node-schedule";
 import dbManager from "structure/DBManager";
-import logger from "structure/Logger";
 import { isNormalTextChannel } from "utils/checkChannel";
+import logger from "utils/log";
 import { getRandomInt } from "utils/utils";
 import createReadyEventListener from "./createReadyEventListener";
 

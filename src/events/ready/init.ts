@@ -1,9 +1,9 @@
 import { ActivityType } from "discord.js";
-import logger from "structure/Logger";
 import rolesManager from "structure/RolesManager";
 import { isNormalTextChannel } from "utils/checkChannel";
 import { manager1 } from "utils/dynamic-vc";
 import isProduction from "utils/isProduction";
+import logger from "utils/log";
 import reloadMembersCount from "utils/reloadMembersCount";
 import createReadyEventListener from "./createReadyEventListener";
 

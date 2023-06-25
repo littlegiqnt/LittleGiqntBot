@@ -1,6 +1,6 @@
 import type { BaseInteraction } from "discord.js";
 import { EmbedBuilder, Message } from "discord.js";
-import logger from "structure/Logger";
+import logger from "utils/log";
 
 export default async (error: unknown, replyTo?: BaseInteraction | Message) => {
     if (!(error instanceof Error)) {

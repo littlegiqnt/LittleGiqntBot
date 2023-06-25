@@ -1,6 +1,6 @@
 import { GUILD_ID } from "config";
-import logger from "structure/Logger";
 import rolesManager from "structure/RolesManager";
+import logger from "utils/log";
 import reloadMembersCount from "utils/reloadMembersCount";
 import createGuildMemberAddEventListener from "./createGuildMemberAddEventListener";
 

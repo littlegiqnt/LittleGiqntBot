@@ -99,7 +99,7 @@ const rules = {
         },
         {
             selector: "objectLiteralProperty",
-            format: ["strictCamelCase", "UPPER_CASE"/* some APIs in package `redis` takes option with uppercased name, e.g. `REV` */],
+            format: ["camelCase", "UPPER_CASE"/* some APIs in package `redis` takes option with uppercased name, e.g. `REV` */],
             leadingUnderscore: "allow",
             trailingUnderscore: "forbid",
         },

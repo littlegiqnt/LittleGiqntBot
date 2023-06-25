@@ -14,7 +14,7 @@ export default new SubCommand({
         }
 
         await interaction.deferReply({ ephemeral: true });
-        if (await loginSelfBot(interaction.user.id)) {
+        if (await loginSelfBot(interaction.user)) {
             interaction.editReply({ content: "실행되었어요!" });
         } else {
             interaction.editReply({ content: "오류가 발생했어요! 올바른 토큰을 입력했는지 확인해 주세요." });
