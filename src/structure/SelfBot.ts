@@ -16,26 +16,32 @@ export class SelfBot {
     /**
      * login
      */
-    public async login() {
+    public async login(): Promise<boolean> {
         try {
             await this.client.login(this.token);
         } catch (e) {
-            this.log("로그인 실패");
-            throw e;
+            logger.selfbotError(
+                this,
+                "로그인 실패",
+                e instanceof Error
+                    ? e
+                    : undefined,
+            );
+            return false;
         }
 
         // 만약 클라이언트 유저가 null이라면
         if (this.client.user == null) {
             this.client.destroy();
-            this.log("로그인 과정에서 오류 발생");
-            throw new Error(`[SelfBot] ${this.user.username} (${this.user.id}) 로그인 과정에서 오류 발생`);
+            logger.selfbotError(this, "로그인 중 오류 발생");
+            return false;
         }
 
         // 만약 해당 계정이 셀프봇 주인이 아니라면
         if (this.client.user.id !== this.user.id) {
             this.client.destroy();
-            this.log("유저 아이디가 일치하지 않아 실행 실패");
-            throw new Error(`[SelfBot] ${this.user.username} (${this.user.id}) 유저 아이디가 일치하지 않아 실패`);
+            logger.selfbotError(this, "유저 아이디가 일치하지 않아 실패");
+            return false;
         }
 
         this.client.user.setStatus("idle");
@@ -47,8 +53,8 @@ export class SelfBot {
         this.client.user.setAFK(true);
 
         // 로그
-        this.log("로그인 성공");
-        logger.selfbotLogin(this.user, this);
+        logger.selfbotLogin(this);
+        return true;
     }
 
     public setCustomStatus(customStatus: string | undefined): boolean {
@@ -59,7 +65,7 @@ export class SelfBot {
                     .setState(customStatus);
                 this.client.user?.setActivity(a);
                 this.client.user?.setAFK(true);
-                logger.selfbotCustomStatusChange(this.user, this);
+                logger.selfbotCustomStatusChange(this);
                 return true;
             }
         }
@@ -68,9 +74,5 @@ export class SelfBot {
 
     public getCustomStatus() {
         return this.customStatus;
-    }
-
-    public log(message: string) {
-        console.log(`[SelfBot] ${this.user.username} (${this.user.id}) : ${message}`);
     }
 }

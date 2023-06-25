@@ -1,8 +1,5 @@
-import { OWNER_ID } from "config";
-import { scheduleJob } from "node-schedule";
 import dbManager from "structure/DBManager";
-import { getSelfBot, loginSelfBot } from "utils/self-bot";
-import { getRandomInt } from "utils/utils";
+import { loginSelfBot } from "utils/self-bot";
 import createReadyEventListener from "./createReadyEventListener";
 
 export default createReadyEventListener(async (client) => {
@@ -17,7 +14,7 @@ export default createReadyEventListener(async (client) => {
     // onEveryDay();
 });
 
-const onEveryDay = () => {
+/* const onEveryDay = () => {
     scheduleJob("0 0 * * *", async () => setTimeout(() => {
         const selfbot = getSelfBot(OWNER_ID);
         if (selfbot == null) return;
@@ -28,4 +25,4 @@ const onEveryDay = () => {
             });
     }, Math.floor(getRandomInt(2000, 13000))),
     );
-};
+}; */

@@ -139,38 +139,60 @@ class Logger {
         return this.commandLogChannel?.send({ embeds: [logEmbed] });
     }
 
-    public async selfbotLogin(user: User, selfbot: SelfBot) {
+    public async selfbotLogin(selfbot: SelfBot) {
         const logEmbed = new EmbedBuilder()
             .setColor("Green")
             .setTitle("Selfbot Login")
             .setDescription(
-                `${userMention(user.id)}\n`
-                    + `**ID**: ${user.id}\n`
-                    + `**Username**: ${user.username}\n`
+                `${userMention(selfbot.user.id)}\n`
+                    + `**ID**: ${selfbot.user.id}\n`
+                    + `**Username**: ${selfbot.user.username}\n`
                     + `**Custom Status**: ${inlineCode(selfbot.getCustomStatus() ?? " ")}`,
             )
             .setAuthor({
-                name: user.username,
-                iconURL: user.displayAvatarURL(),
+                name: selfbot.user.username,
+                iconURL: selfbot.user.displayAvatarURL(),
             });
         return this.selfbotLogChannel?.send({ embeds: [logEmbed] });
     }
 
-    public async selfbotCustomStatusChange(user: User, selfbot: SelfBot) {
+    public async selfbotCustomStatusChange(selfbot: SelfBot) {
         const logEmbed = new EmbedBuilder()
             .setColor("Orange")
             .setTitle("Selfbot Custom Status Changed")
             .setDescription(
-                `${userMention(user.id)}\n`
-                    + `**ID**: ${user.id}\n`
-                    + `**Username**: ${user.username}\n`
+                `${userMention(selfbot.user.id)}\n`
+                    + `**ID**: ${selfbot.user.id}\n`
+                    + `**Username**: ${selfbot.user.username}\n`
                     + `**Custom Status**: ${inlineCode(selfbot.getCustomStatus() ?? " ")}`,
             )
             .setAuthor({
-                name: user.username,
-                iconURL: user.displayAvatarURL(),
+                name: selfbot.user.username,
+                iconURL: selfbot.user.displayAvatarURL(),
             });
         return this.selfbotLogChannel?.send({ embeds: [logEmbed] });
+    }
+
+    public async selfbotError(selfbot: SelfBot, message: string, error?: Error) {
+        if (isProduction()) {
+            const logEmbed = new EmbedBuilder()
+                .setColor("Red")
+                .setTitle(message)
+                .setDescription(
+                    `${userMention(selfbot.user.id)}\n`
+                    + `**ID**: ${selfbot.user.id}\n`
+                    + `**Username**: ${selfbot.user.username}\n`
+                    + `**Custom Status**: ${inlineCode(selfbot.getCustomStatus() ?? " ")}\n`
+                    + `**Stack**: ${error?.stack ?? "없음"}`,
+                )
+                .setAuthor({
+                    name: selfbot.user.username,
+                    iconURL: selfbot.user.displayAvatarURL(),
+                });
+            return this.selfbotLogChannel?.send({ embeds: [logEmbed] });
+        } else {
+            return void console.error(`[SelfBot] ${selfbot.user.username} (${selfbot.user.id}) 오류 발생\n${error}`);
+        }
     }
 }
 

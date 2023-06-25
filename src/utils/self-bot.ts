@@ -2,7 +2,6 @@ import { GUILD_ID } from "config";
 import { GuildMember, User } from "discord.js";
 import dbManager from "structure/DBManager";
 import { SelfBot } from "structure/SelfBot";
-import logger from "utils/log";
 
 const selfbots = new Map<string, SelfBot>();
 
@@ -13,12 +12,7 @@ export const loginSelfBot = async (user: User): Promise<boolean> => {
     // 설정된 토큰 없으면
     if (token == null) return false;
     const selfbot = new SelfBot(user, token);
-    try {
-        await selfbot.login();
-    } catch (e) {
-        logger.error(e);
-        return false;
-    }
+    if (!await selfbot.login()) return false;
     selfbots.set(user.id, selfbot);
     return true;
 };
