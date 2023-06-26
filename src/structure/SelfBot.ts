@@ -3,14 +3,12 @@ import { Client, CustomStatus } from "discord.js-selfbot-v13";
 import logger from "utils/log";
 
 export class SelfBot {
-    protected customStatus?: string;
-
     public readonly client = new Client({
         syncStatus: true,
         checkUpdate: false,
     });
 
-    public constructor(public readonly user: User, public readonly token: string) {
+    public constructor(public readonly user: User, public readonly token: string, protected customStatus?: string) {
     }
 
     /**

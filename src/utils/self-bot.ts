@@ -7,11 +7,13 @@ const selfbots = new Map<string, SelfBot>();
 
 export const loginSelfBot = async (user: User): Promise<boolean> => {
     removeSelfBot(user.id);
+
     const userDb = await dbManager.loadUser(user.id);
     const token = userDb.selfbot.token;
+
     // 설정된 토큰 없으면
     if (token == null) return false;
-    const selfbot = new SelfBot(user, token);
+    const selfbot = new SelfBot(user, token, userDb.selfbot.customStatus);
     if (!await selfbot.login()) return false;
     selfbots.set(user.id, selfbot);
     return true;

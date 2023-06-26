@@ -10,6 +10,7 @@ export interface IUser {
     }
     selfbot: {
         token?: string
+        customStatus?: string
     }
 }
 
@@ -17,5 +18,8 @@ export const userSchema = new Schema<IUser>({
     _id: String,
     coupleSince: { type: Date, required: false },
     birthday: { month: Number, day: Number },
-    selfbot: { token: { type: String, required: false } },
+    selfbot: {
+        token: { type: String, required: false },
+        customStatus: { type: String, required: false },
+    },
 });

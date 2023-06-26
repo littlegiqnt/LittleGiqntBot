@@ -1,6 +1,7 @@
 import { ApplicationCommandOptionType } from "discord.js";
+import dbManager from "structure/DBManager";
 import { SubCommand } from "structure/interaction/command/SubCommand";
-import { getSelfBot, isAllowed } from "utils/self-bot";
+import { getSelfBot, isAllowed, loginSelfBot } from "utils/self-bot";
 
 export default new SubCommand({
     name: "customstatus",
@@ -28,18 +29,20 @@ export default new SubCommand({
         }
 
         const customstatus = interaction.options.getString("custom_status") ?? undefined;
+        const userDb = await dbManager.loadUser(interaction.user.id);
+        userDb.selfbot.customStatus = customstatus;
+        await userDb.save();
+
         const selfbot = getSelfBot(interaction.user.id);
         if (selfbot == null || !selfbot.client.isReady()) {
-            interaction.reply({ content: "실행되고 있는 계정이 없어요!", ephemeral: true });
-            return;
-        }
-        if (selfbot.setCustomStatus(customstatus)) {
-            interaction.reply({ content: "사용자 지정 상태를 설절했어요!", ephemeral: true });
+            if (await loginSelfBot(interaction.user)) {
+                interaction.reply({ content: "사용자 지정 상태가 변경되고, 계정이 꺼져있어 실행되었어요!", ephemeral: true });
+            } else {
+                interaction.reply({ content: "사용자 지정 상태가 변경되었으나 계정 실행에 실패하였어요. 나중에 다시 시도해 보세요!", ephemeral: true });
+            }
         } else {
-            interaction.reply({
-                content: "설정하지 못했어요. 현재 계정이 실행되고 있는지 확인해 보세요.",
-                ephemeral: true,
-            });
+            selfbot.setCustomStatus(customstatus);
+            interaction.reply({ content: "사용자 지정 상태가 변경되었어요!", ephemeral: true });
         }
     },
 });
