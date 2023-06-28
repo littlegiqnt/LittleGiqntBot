@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionType } from "discord.js";
 import { SlashCommand } from "structure/interaction/command/SlashCommand";
-import logger from "utils/log";
+import logUtil from "utils/log";
 
 export default new SlashCommand({
     name: "say",
@@ -22,6 +22,6 @@ export default new SlashCommand({
             content: "✓",
         })
             .then(() => interaction.deleteReply());
-        logger.sayCommand(interaction.user, msg);
+        logUtil.sayCommand(interaction.user, msg);
     },
 });

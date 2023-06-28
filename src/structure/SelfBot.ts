@@ -1,14 +1,16 @@
 import { User } from "discord.js";
-import { Client, CustomStatus } from "discord.js-selfbot-v13";
-import logger from "utils/log";
+import { Client, CustomStatus, PartialTypes } from "discord.js-selfbot-v13";
+import logUtil from "utils/log";
 
 export class SelfBot {
-    public readonly client = new Client({
-        syncStatus: true,
-        checkUpdate: false,
-    });
+    public readonly client;
 
-    public constructor(public readonly user: User, public readonly token: string, protected customStatus?: string) {
+    public constructor(public readonly user: User, public readonly token: string, protected customStatus?: string, protected partials?: Array<PartialTypes>) {
+        this.client = new Client({
+            syncStatus: true,
+            checkUpdate: false,
+            partials: partials ?? [],
+        });
     }
 
     /**
@@ -18,7 +20,7 @@ export class SelfBot {
         try {
             await this.client.login(this.token);
         } catch (e) {
-            logger.selfbotError(
+            logUtil.selfbotError(
                 this,
                 "로그인 실패",
                 e instanceof Error
@@ -30,15 +32,15 @@ export class SelfBot {
 
         // 만약 클라이언트 유저가 null이라면
         if (this.client.user == null) {
-            this.client.destroy();
-            logger.selfbotError(this, "로그인 중 오류 발생");
+            await this.client.logout();
+            logUtil.selfbotError(this, "로그인 중 오류 발생");
             return false;
         }
 
         // 만약 해당 계정이 셀프봇 주인이 아니라면
         if (this.client.user.id !== this.user.id) {
-            this.client.destroy();
-            logger.selfbotError(this, "유저 아이디가 일치하지 않아 실패");
+            await this.client.logout();
+            logUtil.selfbotError(this, "유저 아이디가 일치하지 않아 실패");
             return false;
         }
 
@@ -51,7 +53,7 @@ export class SelfBot {
         this.client.user.setAFK(true);
 
         // 로그
-        logger.selfbotLogin(this);
+        logUtil.selfbotLogin(this);
         return true;
     }
 
@@ -63,7 +65,7 @@ export class SelfBot {
                     .setState(customStatus);
                 this.client.user?.setActivity(a);
                 this.client.user?.setAFK(true);
-                logger.selfbotCustomStatusChange(this);
+                logUtil.selfbotCustomStatusChange(this);
                 return true;
             }
         }

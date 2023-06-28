@@ -3,7 +3,7 @@ import { Client, EmbedBuilder, GuildMember, userMention } from "discord.js";
 import { scheduleJob } from "node-schedule";
 import dbManager from "structure/DBManager";
 import { isNormalTextChannel } from "utils/checkChannel";
-import logger from "utils/log";
+import logUtil from "utils/log";
 import { getRandomInt } from "utils/utils";
 import createReadyEventListener from "./createReadyEventListener";
 
@@ -13,7 +13,7 @@ export default createReadyEventListener(async (client) => {
 
 export const onEveryDay = async (client: Client) => {
     const guild = await client.guilds.fetch(GUILD_ID);
-    if (guild == null) logger.error("guild is null");
+    if (guild == null) logUtil.error("guild is null");
     const today = new Date();
     const month = today.getMonth() + 1;
     const day = today.getDate();
@@ -34,7 +34,7 @@ export const onEveryDay = async (client: Client) => {
 
     const channel = guild.channels.cache.get("1100430961243586723");
     if (channel == null || !isNormalTextChannel(channel)) {
-        logger.error("생일 알림 채널 못찾음!!");
+        logUtil.error("생일 알림 채널 못찾음!!");
         return;
     }
 

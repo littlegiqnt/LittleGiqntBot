@@ -2,7 +2,7 @@ import { Client, EmbedBuilder, GuildMember, PartialGuildMember, TextChannel, Use
 import { SelfBot } from "structure/SelfBot";
 import isProduction from "utils/isProduction";
 
-class Logger {
+class LogUtil {
     private userLogChannel: TextChannel | undefined;
     private devChannel: TextChannel | undefined;
     private mainChatChannel: TextChannel | undefined;
@@ -196,5 +196,5 @@ class Logger {
     }
 }
 
-const logger = new Logger();
-export default logger;
+const logUtil = new LogUtil();
+export default logUtil;

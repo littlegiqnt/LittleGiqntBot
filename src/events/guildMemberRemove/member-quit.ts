@@ -1,5 +1,5 @@
 import { GUILD_ID } from "config";
-import logger from "utils/log";
+import logUtil from "utils/log";
 import reloadMembersCount from "utils/reloadMembersCount";
 import createGuildMemberRemoveEventListener from "./createGuildMemberRemoveEventListener";
 
@@ -8,5 +8,5 @@ export default createGuildMemberRemoveEventListener(async (member) => {
     if (member.guild.id !== GUILD_ID) return;
 
     reloadMembersCount(member.client);
-    logger.userQuit(member);
+    logUtil.userQuit(member);
 });
