@@ -62,6 +62,9 @@ export class SelfBot {
         if (this.client.isReady()) {
             if (customStatus == null) {
                 this.client.user?.setActivity(undefined);
+                this.client.user?.setAFK(true);
+                logUtil.selfbotCustomStatusChange(this);
+                return true;
             } else {
                 const a = new CustomStatus()
                     .setState(customStatus);
