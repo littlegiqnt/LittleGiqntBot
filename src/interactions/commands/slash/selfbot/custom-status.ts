@@ -41,8 +41,11 @@ export default new SubCommand({
                 interaction.reply({ content: "사용자 지정 상태가 변경되었으나 계정 실행에 실패하였어요. 나중에 다시 시도해 보세요!", ephemeral: true });
             }
         } else {
-            selfbot.setCustomStatus(customstatus);
-            interaction.reply({ content: "사용자 지정 상태가 변경되었어요!", ephemeral: true });
+            if (selfbot.setCustomStatus(customstatus)) {
+                interaction.reply({ content: "사용자 지정 상태가 변경되었어요!", ephemeral: true });
+            } else {
+                interaction.reply({ content: "사용자 지정 상태 변경에 실패하였어요.", ephemeral: true });
+            }
         }
     },
 });

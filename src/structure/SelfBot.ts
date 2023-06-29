@@ -60,7 +60,9 @@ export class SelfBot {
     public setCustomStatus(customStatus: string | undefined): boolean {
         this.customStatus = customStatus;
         if (this.client.isReady()) {
-            if (customStatus != null) {
+            if (customStatus == null) {
+                this.client.user?.setActivity(undefined);
+            } else {
                 const a = new CustomStatus()
                     .setState(customStatus);
                 this.client.user?.setActivity(a);
