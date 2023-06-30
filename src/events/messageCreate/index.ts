@@ -1,3 +1,7 @@
+import executeClips from "./execute-clips";
 import executeCommands from "./execute-commands";
 
-export default [executeCommands];
+export default [
+    executeCommands,
+    executeClips,
+];
