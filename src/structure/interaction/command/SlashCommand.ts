@@ -9,7 +9,7 @@ export interface SlashCommandOptions extends BaseSlashCommandOptions {
     readonly guildId?: string
 }
 
-export interface ParentSlashCommandOptions extends Pick<BaseSlashCommandOptions, "name"> {
+export interface ParentSlashCommandOptions extends Pick<BaseSlashCommandOptions, "name" | "description"> {
     readonly subCommands: Array<SubCommand | SubCommandGroup>
     readonly guildId?: string
 }
