@@ -1,5 +1,6 @@
 import { ApplicationCommandOptionType, EmbedBuilder } from "discord.js";
 import { SubCommand } from "structure/interaction/command/SubCommand";
+import logUtil from "utils/log";
 import { getMedalClip } from "utils/medal/medalVid";
 
 export default new SubCommand({
@@ -19,16 +20,18 @@ export default new SubCommand({
         },
     ],
     async execute(interaction) {
-        const clip = await getMedalClip(interaction.options.getString("url")!);
+        const url = interaction.options.getString("url")!;
+        const clip = await getMedalClip(url);
         if (clip == null) {
             interaction.reply({
                 embeds: [
                     new EmbedBuilder()
                         .setColor("Red")
                         .setTitle("클립을 가져오지 못했어요!")
-                        .setDescription("혹시 url를 잘못 입력하신건 아닌지 확인해 보세요."),
+                        .setDescription("혹시 url를 잘못 입력하신건 아닌지 확인해 보세요.\nFailed to fetch."),
                 ],
             });
+            logUtil.medalDownloadCommand(interaction.user, url, "failed");
         } else {
             interaction.reply({
                 embeds: [
@@ -39,6 +42,7 @@ export default new SubCommand({
                         .setDescription(`Raw Video Link: [Click](${clip.contentUrlBestQuality})`),
                 ],
             });
+            logUtil.medalDownloadCommand(interaction.user, url, clip);
         }
     },
 });

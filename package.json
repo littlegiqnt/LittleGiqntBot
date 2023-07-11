@@ -7,13 +7,13 @@
     "dev": "ts-node-dev --respawn --transpile-only -r tsconfig-paths/register ./src/index.ts"
   },
   "devDependencies": {
-    "@types/node": "^18.16.18",
+    "@types/node": "^18.16.19",
     "@types/node-schedule": "^2.1.0",
-    "@typescript-eslint/eslint-plugin": "^5.60.0",
-    "@typescript-eslint/parser": "^5.60.0",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
     "cross-env": "^7.0.3",
     "dotenv": "^16.3.1",
-    "eslint": "^8.43.0",
+    "eslint": "^8.44.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^15.7.0",
     "eslint-plugin-promise": "^6.1.1",

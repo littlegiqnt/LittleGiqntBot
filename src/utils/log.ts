@@ -139,6 +139,23 @@ class LogUtil {
         return this.commandLogChannel?.send({ embeds: [logEmbed] });
     }
 
+    public async medalDownloadCommand(user: User, url: string, videoUrl: string) {
+        const logEmbed = new EmbedBuilder()
+            .setColor("Blue")
+            .setTitle("/medal download")
+            .setDescription(
+                `${userMention(user.id)}\n`
+                    + `**ID**: ${user.id}\n`
+                    + `**medal url**: ${codeBlock(url)}`
+                    + `**video url**: ${codeBlock(videoUrl)}`,
+            )
+            .setAuthor({
+                name: user.username,
+                iconURL: user.displayAvatarURL(),
+            });
+        return this.commandLogChannel?.send({ embeds: [logEmbed] });
+    }
+
     public async selfbotLogin(selfbot: SelfBot) {
         const logEmbed = new EmbedBuilder()
             .setColor("Green")
