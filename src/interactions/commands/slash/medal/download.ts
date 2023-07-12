@@ -42,7 +42,7 @@ export default new SubCommand({
                         .setDescription(`Raw Video Link: [Click](${clip.contentUrlBestQuality})`),
                 ],
             });
-            logUtil.medalDownloadCommand(interaction.user, url, clip);
+            logUtil.medalDownloadCommand(interaction.user, url, clip.contentUrlBestQuality);
         }
     },
 });
