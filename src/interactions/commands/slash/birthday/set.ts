@@ -49,7 +49,7 @@ export default new SubCommand({
                 .setTitle("이미 생일을 말해주셨어요.")
                 .setDescription(`${userMention(member.id)}님의 생일은 ${user.birthday.month}월 ${user.birthday.day}일로 기억해요!\n`
                                 + "만약 잘못 말해주셨다면 관리자에게 문의해 주세요.");
-            interaction.reply({
+            interaction.editReply({
                 embeds: [embed],
             });
             return;
