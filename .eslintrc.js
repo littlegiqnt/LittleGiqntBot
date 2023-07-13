@@ -243,7 +243,7 @@ const rules = {
      * ```
      */
     "new-parens": "error",
-    "newline-per-chained-call": ["warn", { ignoreChainWithDepth: 1 }],
+    "newline-per-chained-call": ["warn", { ignoreChainWithDepth: 2 }],
     /**
      * strongly recommended
      * 

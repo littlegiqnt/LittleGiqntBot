@@ -42,6 +42,19 @@ export default new SubCommand({
             throw new Error("member가 GuildMember가 아님");
         }
         const user = await dbManager.loadUser(member.id);
+
+        if (user.birthday.month != null && user.birthday.day != null) {
+            const embed = new EmbedBuilder()
+                .setColor("Red")
+                .setTitle("이미 생일을 말해주셨어요.")
+                .setDescription(`${userMention(member.id)}님의 생일은 ${user.birthday.month}월 ${user.birthday.day}일로 기억해요!\n`
+                                + "만약 잘못 말해주셨다면 관리자에게 문의해 주세요.");
+            interaction.reply({
+                embeds: [embed],
+            });
+            return;
+        }
+
         const month = interaction.options.getInteger("month");
         const day = interaction.options.getInteger("day");
         if (month != null && month >= 1 && month <= 12
@@ -52,7 +65,7 @@ export default new SubCommand({
             const embed = new EmbedBuilder()
                 .setColor("Green")
                 .setTitle("생일을 기억할게요!")
-                .setDescription(`${userMention(member.id)}님의 생일은 ${month}월 ${day}일 이에요!\n`);
+                .setDescription(`${userMention(member.id)}님의 생일은 ${month}월 ${day}일 이에요!`);
             interaction.editReply({ embeds: [embed] });
         } else {
             const embed = new EmbedBuilder()

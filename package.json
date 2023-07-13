@@ -25,8 +25,8 @@
   "dependencies": {
     "axios": "^1.4.0",
     "discord.js": "^14.11.0",
-    "discord.js-selfbot-v13": "^2.14.6",
-    "mongoose": "^6.11.2",
+    "discord.js-selfbot-v13": "^2.14.8",
+    "mongoose": "^6.11.3",
     "node-schedule": "^2.1.1"
   }
 }
