@@ -1,7 +1,7 @@
 import { GUILD_ID } from "config";
 import rolesManager from "structure/RolesManager";
+import { reloadMembersCount } from "utils/discordUtils";
 import logUtil from "utils/log";
-import reloadMembersCount from "utils/reloadMembersCount";
 import createGuildMemberAddEventListener from "./createGuildMemberAddEventListener";
 
 export default createGuildMemberAddEventListener(async (member) => {

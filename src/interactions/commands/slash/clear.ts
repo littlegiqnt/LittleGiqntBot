@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionType, EmbedBuilder } from "discord.js";
 import { SlashCommand } from "structure/interaction/command/SlashCommand";
-import { isNormalTextChannel } from "utils/checkChannel";
+import { isNormalTextChannel } from "utils/discordUtils";
 
 export default new SlashCommand({
     name: "clear",
@@ -28,7 +28,7 @@ export default new SlashCommand({
         let size = 0;
         try {
             size = (await channel.bulkDelete(amount)).size;
-        } catch (error) {}
+        } catch (error) { /* empty */ }
 
         const embed = new EmbedBuilder()
             .setColor("Green")

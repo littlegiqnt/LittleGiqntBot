@@ -2,7 +2,7 @@ import { Interaction as DInteraction } from "discord.js";
 import commands from "interactions/commands/slash";
 import buttons from "interactions/components/buttons";
 import { Interaction } from "structure/interaction/Interaction";
-import handleErrorReply from "utils/handleErrorReply";
+import { handleErrorReply } from "utils/discordUtils";
 import createInteractionCreateEventListener from "./createInteractionCreateEventListener";
 
 export default createInteractionCreateEventListener(async (interaction) => {

@@ -1,7 +1,7 @@
 import { ButtonBuilder, ButtonInteraction, ButtonStyle, EmbedBuilder, GuildMember } from "discord.js";
 import { ActionRow } from "structure/ActionRow";
 import rolesManager from "structure/RolesManager";
-import handleErrorReply from "utils/handleErrorReply";
+import { handleErrorReply } from "utils/discordUtils";
 import logUtil from "utils/log";
 import createInteractionCreateEventListener from "./createInteractionCreateEventListener";
 

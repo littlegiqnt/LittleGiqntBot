@@ -3,7 +3,7 @@ import type { ButtonInteraction, MessageComponentInteraction, Role } from "disco
 import { GuildMember } from "discord.js";
 import rolesManager from "structure/RolesManager";
 import TaskQueue from "structure/TaskQueue";
-import handleErrorReply from "utils/handleErrorReply";
+import { handleErrorReply } from "utils/discordUtils";
 import createInteractionCreateEventListener from "./createInteractionCreateEventListener";
 
 export default createInteractionCreateEventListener(async (interaction) => {

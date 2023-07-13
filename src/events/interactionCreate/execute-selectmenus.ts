@@ -1,7 +1,7 @@
 import type { Role, StringSelectMenuInteraction } from "discord.js";
 import { GuildMember } from "discord.js";
 import rolesManager from "structure/RolesManager";
-import handleErrorReply from "utils/handleErrorReply";
+import { handleErrorReply } from "utils/discordUtils";
 import createInteractionCreateEventListener from "./createInteractionCreateEventListener";
 
 export default createInteractionCreateEventListener(async (interaction) => {

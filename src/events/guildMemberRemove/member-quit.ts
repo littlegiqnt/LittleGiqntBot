@@ -1,6 +1,6 @@
 import { GUILD_ID } from "config";
+import { reloadMembersCount } from "utils/discordUtils";
 import logUtil from "utils/log";
-import reloadMembersCount from "utils/reloadMembersCount";
 import createGuildMemberRemoveEventListener from "./createGuildMemberRemoveEventListener";
 
 export default createGuildMemberRemoveEventListener(async (member) => {

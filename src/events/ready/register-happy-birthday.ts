@@ -2,7 +2,7 @@ import { GUILD_ID, OWNER_ID } from "config";
 import { Client, EmbedBuilder, GuildMember, userMention } from "discord.js";
 import { scheduleJob } from "node-schedule";
 import dbManager from "structure/DBManager";
-import { isNormalTextChannel } from "utils/checkChannel";
+import { isNormalTextChannel } from "utils/discordUtils";
 import logUtil from "utils/log";
 import { getRandomInt } from "utils/utils";
 import createReadyEventListener from "./createReadyEventListener";
