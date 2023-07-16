@@ -18,16 +18,15 @@ export default new SubCommand({
 const send = async (channel: TextChannel) => {
     const embed = new EmbedBuilder()
         .setColor("Orange")
-        .setTitle("✨ 환영해요!")
+        .setTitle("✨ 커뮤니티")
         .setDescription(
-            "이 서버는 작은거인(리자)님의 __자유로운 소통과 친목__을 위한 커뮤니티/소통 서버에요!\n"
-            + "서버에서 활동하시기 앞서 먼저 제가 간단한 준비를 진행할게요!\n"
-            + "Please click the button below!",
+            "서버 커뮤니티에서 사람들과 대화하고, 니트로 무료 나눔 등의 이벤트에 참여하고 싶으시다면 버튼을 눌러주세요!\n"
+            + "커뮤니티에 참여하지 않으셔도 공지는 받을 수 있어요.",
         );
     const row = new ActionRow<ButtonBuilder>(
         new ButtonBuilder()
             .setCustomId("guide_1")
-            .setLabel("진행하기")
+            .setLabel("커뮤니티 참여하기")
             .setStyle(ButtonStyle.Primary),
     );
     await channel.send({ embeds: [embed], components: [row] });

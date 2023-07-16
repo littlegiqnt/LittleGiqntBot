@@ -45,87 +45,13 @@ const processSelectRoles = (interaction: ButtonInteraction) => {
                 ]);
                 break;
             }
-            case "selectroles_adult": {
-                await Promise.all([
-                    member.roles.add(rolesManager.get("adult")),
-                    member.roles.remove(rolesManager.get("highschool")),
-                    member.roles.remove(rolesManager.get("middleschool")),
-                ]);
-                break;
-            }
-            case "selectroles_highschool": {
-                await Promise.all([
-                    member.roles.remove(rolesManager.get("adult")),
-                    member.roles.add(rolesManager.get("highschool")),
-                    member.roles.remove(rolesManager.get("middleschool")),
-                ]);
-                break;
-            }
-            case "selectroles_middleschool": {
-                await Promise.all([
-                    member.roles.remove(rolesManager.get("adult")),
-                    member.roles.remove(rolesManager.get("highschool")),
-                    member.roles.add(rolesManager.get("middleschool")),
-                ]);
-                break;
-            }
-            case "selectroles_couple": {
-                await Promise.all([
-                    member.roles.add(rolesManager.get("couple")),
-                    member.roles.remove(rolesManager.get("single")),
-                    member.roles.remove(rolesManager.get("foreveralone")),
-                    member.roles.remove(rolesManager.get("lovePrivate")),
-                ]);
-                break;
-            }
-            case "selectroles_single": {
-                await Promise.all([
-                    member.roles.remove(rolesManager.get("couple")),
-                    member.roles.add(rolesManager.get("single")),
-                    member.roles.remove(rolesManager.get("foreveralone")),
-                    member.roles.remove(rolesManager.get("lovePrivate")),
-                ]);
-                break;
-            }
-            case "selectroles_foreveralone": {
-                await Promise.all([
-                    member.roles.remove(rolesManager.get("couple")),
-                    member.roles.remove(rolesManager.get("single")),
-                    member.roles.add(rolesManager.get("foreveralone")),
-                    member.roles.remove(rolesManager.get("lovePrivate")),
-                ]);
-                break;
-            }
-            case "selectroles_relationship_hide": {
-                await Promise.all([
-                    member.roles.remove(rolesManager.get("couple")),
-                    member.roles.remove(rolesManager.get("single")),
-                    member.roles.remove(rolesManager.get("foreveralone")),
-                    member.roles.add(rolesManager.get("lovePrivate")),
-                ]);
-                break;
-            }
-            case "selectroles_dm_allow": {
-                await Promise.all([
-                    member.roles.add(rolesManager.get("dmAllow")),
-                    member.roles.remove(rolesManager.get("dmDisallow")),
-                ]);
-                break;
-            }
-            case "selectroles_dm_disallow": {
-                await Promise.all([
-                    member.roles.remove(rolesManager.get("dmAllow")),
-                    member.roles.add(rolesManager.get("dmDisallow")),
-                ]);
-                break;
-            }
             case "selectroles_announcement": {
-                const role: Role = rolesManager.get("announcement");
+                const role: Role = rolesManager.get("announcementPing");
                 handleSelectableRole(role, member, interaction);
                 return;
             }
             case "selectroles_giveaway": {
-                const role: Role = rolesManager.get("giveaway");
+                const role: Role = rolesManager.get("giveawayPing");
                 handleSelectableRole(role, member, interaction);
                 return;
             }
