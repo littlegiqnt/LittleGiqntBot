@@ -228,7 +228,6 @@ const rules = {
      * strongly recommended
      */
     "max-statements-per-line": "error",
-    "multiline-ternary": "warn",
     /**
      * `new` without parentheses might be confused:
      * ```
