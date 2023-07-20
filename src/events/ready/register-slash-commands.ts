@@ -1,6 +1,6 @@
+import commands from "commands/slash";
 import { DEBUG_COMMANDS } from "config";
 import { createWriteStream } from "fs";
-import commands from "interactions/commands/slash";
 import type { SlashCommand } from "structure/interaction/command/SlashCommand";
 import createReadyEventListener from "./createReadyEventListener";
 

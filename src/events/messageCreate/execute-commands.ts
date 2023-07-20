@@ -1,6 +1,6 @@
-import commands from "textcommands";
-import createMessageCreateEventListener from "./createMessageCreateEventListener";
+import commands from "commands/text";
 import { PREFIX } from "config";
+import createMessageCreateEventListener from "./createMessageCreateEventListener";
 
 export default createMessageCreateEventListener((msg) => {
     if (!msg.content.startsWith(PREFIX)) return;

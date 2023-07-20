@@ -122,7 +122,7 @@ const rules = {
      * strongly recommended
      */
     "@typescript-eslint/no-inferrable-types": ["error", { ignoreParameters: true }],
-    "@typescript-eslint/no-misused-promises": ["error", { checkConditionals: false/* conditions will be handled by `@typescript-eslint/strict-boolean-expressions` */ }],
+    "@typescript-eslint/no-misused-promises": ["error"],
     "@typescript-eslint/no-non-null-asserted-nullish-coalescing": "warn",
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/no-redundant-type-constituents": "warn",

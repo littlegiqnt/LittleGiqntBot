@@ -1,6 +1,5 @@
+import commands from "commands/slash";
 import { Interaction as DInteraction } from "discord.js";
-import commands from "interactions/commands/slash";
-import buttons from "interactions/components/buttons";
 import { Interaction } from "structure/interaction/Interaction";
 import { handleErrorReply } from "utils/discordUtils";
 import createInteractionCreateEventListener from "./createInteractionCreateEventListener";
@@ -8,9 +7,9 @@ import createInteractionCreateEventListener from "./createInteractionCreateEvent
 export default createInteractionCreateEventListener(async (interaction) => {
     if (interaction.isChatInputCommand()) {
         travel(commands, interaction);
-    } else if (interaction.isButton()) {
+    }/* else if (interaction.isButton()) {
         travel(buttons, interaction);
-    }
+    } */
 });
 
 const travel = async <T extends DInteraction>(executables: Array<Interaction<T>>, interaction: T) => {
