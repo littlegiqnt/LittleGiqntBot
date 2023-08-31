@@ -10,8 +10,6 @@ class RolesManager {
     public readonly rolesId = {
         owner: "1023192476573519912",
         community: "1023192667372388412",
-        male: "1023192732090515536",
-        female: "1023192805339824239",
         announcementPing: "1024229806193258506",
         giveawayPing: "1027775934645932093",
         nsfwpass: "1108720383747686470",
@@ -19,7 +17,7 @@ class RolesManager {
 
     private roles: Partial<Record<keyof typeof this.rolesId, Role>> = {};
 
-    public constructor(private guildId: string) {}
+    public constructor(private guildId: string) { }
 
     public async load(client: Client) {
         const guild = await client.guilds.fetch(this.guildId);

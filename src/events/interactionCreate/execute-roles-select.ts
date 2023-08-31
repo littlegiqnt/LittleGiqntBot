@@ -31,20 +31,6 @@ const processSelectRoles = (interaction: ButtonInteraction) => {
             return;
         }
         switch (interaction.customId) {
-            case "selectroles_male": {
-                await Promise.all([
-                    member.roles.add(rolesManager.get("male")),
-                    member.roles.remove(rolesManager.get("female")),
-                ]);
-                break;
-            }
-            case "selectroles_female": {
-                await Promise.all([
-                    member.roles.remove(rolesManager.get("male")),
-                    member.roles.add(rolesManager.get("female")),
-                ]);
-                break;
-            }
             case "selectroles_announcement": {
                 const role: Role = rolesManager.get("announcementPing");
                 handleSelectableRole(role, member, interaction);
