@@ -12,7 +12,16 @@ export default new TextCommand({
             return;
         }
         try {
-            eval(args);
+            const result = await eval(args.join(" ")) as unknown;
+            await msg.reply({
+                embeds: [
+                    new EmbedBuilder()
+                        .setColor("White")
+                        .setTitle("Eval")
+                        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+                        .setDescription("" + result),
+                ],
+            });
         } catch (e) {
             const embed = new EmbedBuilder()
                 .setColor("Red")
@@ -23,7 +32,7 @@ export default new TextCommand({
                 embed.setDescription(escapeMarkdown(String(e)));
             }
 
-            msg.reply({
+            await msg.reply({
                 embeds: [embed],
             });
         }
