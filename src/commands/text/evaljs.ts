@@ -12,7 +12,7 @@ export default new TextCommand({
             return;
         }
         try {
-            const result = await eval(args.join(" ")) as unknown;
+            const result = await eval(args) as unknown;
             await msg.reply({
                 embeds: [
                     new EmbedBuilder()
