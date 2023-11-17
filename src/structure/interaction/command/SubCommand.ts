@@ -1,17 +1,17 @@
-import type { ApplicationCommandSubCommand } from "discord.js";
-import { ApplicationCommandOptionType, type ChatInputCommandInteraction } from "discord.js";
+import { ApplicationCommandOptionType } from "discord.js";
+import type { ApplicationCommandSubCommandData, AutocompleteInteraction, ChatInputCommandInteraction } from "discord.js";
 import { BaseSlashCommand } from "./BaseSlashCommand";
 
-export class SubCommand extends BaseSlashCommand {
-    public override isMine(interaction: ChatInputCommandInteraction): boolean {
+export class SubCommand extends BaseSlashCommand<ApplicationCommandSubCommandData> {
+    public override isMine(interaction: ChatInputCommandInteraction | AutocompleteInteraction): boolean {
         return interaction.options.getSubcommand(false) === this.name;
     }
 
-    public override toRaw(): Array<ApplicationCommandSubCommand> {
+    public override toRaw(): ApplicationCommandSubCommandData {
         return {
-            ...super.toRaw(),
+            ...super.getRawPart(),
             type: ApplicationCommandOptionType.Subcommand as const,
-            options: [...this.args, ...this.optionalArgs],
+            options: this.options,
         };
     }
 }

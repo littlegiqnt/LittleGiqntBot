@@ -1,5 +1,6 @@
 import { ApplicationCommandOptionType, EmbedBuilder, codeBlock, userMention } from "discord.js";
 import { SubCommand } from "structure/interaction/command/SubCommand";
+import logUtil from "utils/log";
 import reminders from "./reminders";
 
 export default new SubCommand({
@@ -11,7 +12,7 @@ export default new SubCommand({
         en: "Remind me later!",
         ko: "좀 있다 다시 알려줘!",
     },
-    args: [
+    options: [
         {
             type: ApplicationCommandOptionType.Integer,
             name: "hour",
@@ -22,6 +23,7 @@ export default new SubCommand({
             descriptionLocalizations: {
                 ko: "몇 시간 후에 알려드릴까요?",
             },
+            required: true,
         },
         {
             type: ApplicationCommandOptionType.Integer,
@@ -33,9 +35,8 @@ export default new SubCommand({
             descriptionLocalizations: {
                 ko: "몇 분 후에 알려드릴까요?",
             },
+            required: true,
         },
-    ],
-    optionalArgs: [
         {
             type: ApplicationCommandOptionType.String,
             name: "message",
@@ -46,9 +47,10 @@ export default new SubCommand({
             descriptionLocalizations: {
                 ko: "어떤 메세지와 함께 알려드릴까요?",
             },
+            required: false,
         },
     ],
-    async execute(interaction) {
+    execute: async (interaction) => {
         await interaction.deferReply();
         const user = interaction.user;
         const hours = interaction.options.getInteger("hour") ?? 0;
@@ -56,7 +58,7 @@ export default new SubCommand({
         const message = interaction.options.getString("message") ?? "설정하신 메세지가 없어요";
 
         if (hours < 0 || minutes < 0) {
-            interaction.editReply({ embeds: [
+            await interaction.editReply({ embeds: [
                 new EmbedBuilder()
                     .setColor("Red")
                     .setTitle("어엇")
@@ -64,7 +66,7 @@ export default new SubCommand({
             ] });
             return;
         } else if (hours === 0 && minutes === 0) {
-            interaction.editReply({ embeds: [
+            await interaction.editReply({ embeds: [
                 new EmbedBuilder()
                     .setColor("Red")
                     .setTitle("어엇")
@@ -86,16 +88,16 @@ export default new SubCommand({
                             codeBlock(message)}`),
                 ],
                 allowedMentions: { users: [user.id] },
-            });
+            }).catch(err => logUtil.error(err));
         }, ms);
 
         reminders.set(user.id, {
             userId: interaction.user.id,
-            timeout: timeout,
+            timeout,
             end: Date.now() + ms,
         });
 
-        interaction.editReply({ embeds: [
+        await interaction.editReply({ embeds: [
             new EmbedBuilder()
                 .setColor("Green")
                 .setTitle("기억했어요!")

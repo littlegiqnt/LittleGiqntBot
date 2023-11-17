@@ -1,12 +1,13 @@
-import LocaleOption from "utils/types/LocaleOption";
-import { Interaction, InteractionOptions } from "../Interaction";
+import type LocaleOption from "utils/types/LocaleOption";
+import type { InteractionOptions } from "../Interaction";
+import { Interaction } from "../Interaction";
 
-export interface CommandOptions<Args extends Array<any>> extends InteractionOptions<Args> {
+export interface CommandOptions<Args extends unknown[]> extends InteractionOptions<Args> {
     readonly name: string
     readonly nameLocales?: LocaleOption
 }
 
-export abstract class Command<T, Args extends Array<any> = [T]> extends Interaction<T, Args> {
+export abstract class Command<T, Args extends unknown[] = [T]> extends Interaction<T, Args> {
     public readonly name: string;
     public readonly nameLocale?: LocaleOption;
 

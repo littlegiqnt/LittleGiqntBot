@@ -1,13 +1,15 @@
-import { ButtonBuilder, ButtonStyle, EmbedBuilder, TextChannel } from "discord.js";
+import type { TextChannel } from "discord.js";
+import { ButtonBuilder, ButtonStyle, EmbedBuilder } from "discord.js";
 import { ActionRow } from "structure/ActionRow";
 import { SubCommand } from "structure/interaction/command/SubCommand";
 import { isNormalTextChannel } from "utils/discordUtils";
 
 export default new SubCommand({
     name: "guide",
-    async execute(interaction) {
+    execute: async (interaction) => {
         interaction.deferReply()
-            .then(() => interaction.deleteReply());
+            .then(() => interaction.deleteReply())
+            .catch(() => undefined);
 
         if (interaction.channel == null || !isNormalTextChannel(interaction.channel)) return;
 

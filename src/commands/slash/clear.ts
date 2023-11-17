@@ -8,7 +8,7 @@ export default new SlashCommand({
         en: "Delete messages",
         ko: "메세지 삭제",
     },
-    args: [
+    options: [
         {
             type: ApplicationCommandOptionType.Integer,
             name: "amount",
@@ -16,14 +16,15 @@ export default new SlashCommand({
             descriptionLocalizations: {
                 ko: "지울 메세지 개수",
             },
+            required: true,
         },
     ],
-    async execute(interaction) {
+    execute: async (interaction) => {
         const { channel } = interaction;
         const amount = interaction.options.getInteger("amount")!;
         if (channel == null || !isNormalTextChannel(channel)) return;
 
-        interaction.deferReply({ ephemeral: true });
+        await interaction.deferReply({ ephemeral: true });
 
         let size = 0;
         try {
@@ -35,6 +36,6 @@ export default new SlashCommand({
             .setTitle("삭제 성공!")
             .setDescription(`총 ${size}/${amount}개의 메세지가 삭제됐어요!`);
 
-        interaction.editReply({ embeds: [embed] });
+        await interaction.editReply({ embeds: [embed] });
     },
 });

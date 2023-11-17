@@ -1,24 +1,23 @@
-import { APISelectMenuOption, ButtonBuilder, ButtonStyle, EmbedBuilder, StringSelectMenuBuilder, TextBasedChannel } from "discord.js";
+import type { APISelectMenuOption, TextBasedChannel } from "discord.js";
+import { ButtonBuilder, ButtonStyle, EmbedBuilder, StringSelectMenuBuilder } from "discord.js";
 import { ActionRow } from "structure/ActionRow";
 import { SubCommand } from "structure/interaction/command/SubCommand";
 
 export default new SubCommand({
     name: "roles",
-    async execute(interaction) {
+    execute: async (interaction) => {
         interaction.deferReply()
-            .then(() => interaction.deleteReply());
+            .then(() => interaction.deleteReply())
+            .catch(() => undefined);
 
         if (interaction.channel == null) return;
 
-        await loveSelect(interaction.channel);
-        await dmSelect(interaction.channel);
         await pingRelatedSelect(interaction.channel);
-        await gamesSelect(interaction.channel);
         await nsfwPass(interaction.channel);
     },
 });
 
-// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+// eslint-disable-next-line unused-imports/no-unused-vars
 const genderSelect = async (channel: TextBasedChannel) => {
     const embed = new EmbedBuilder()
         .setColor("Blue")
@@ -39,7 +38,7 @@ const genderSelect = async (channel: TextBasedChannel) => {
     return channel.send({ embeds: [embed], components: [row] });
 };
 
-// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+// eslint-disable-next-line unused-imports/no-unused-vars
 const ageSelect = async (channel: TextBasedChannel) => {
     const embed = new EmbedBuilder()
         .setColor("Blue")
@@ -65,6 +64,7 @@ const ageSelect = async (channel: TextBasedChannel) => {
     return channel.send({ embeds: [embed], components: [row] });
 };
 
+// eslint-disable-next-line unused-imports/no-unused-vars
 const loveSelect = async (channel: TextBasedChannel) => {
     const embed = new EmbedBuilder()
         .setColor("Blue")
@@ -95,6 +95,7 @@ const loveSelect = async (channel: TextBasedChannel) => {
     return channel.send({ embeds: [embed], components: [row] });
 };
 
+// eslint-disable-next-line unused-imports/no-unused-vars
 const dmSelect = async (channel: TextBasedChannel) => {
     const embed = new EmbedBuilder()
         .setColor("Blue")
@@ -135,6 +136,7 @@ const pingRelatedSelect = async (channel: TextBasedChannel) => {
     return channel.send({ embeds: [embed], components: [row] });
 };
 
+// eslint-disable-next-line unused-imports/no-unused-vars
 const gamesSelect = async (channel: TextBasedChannel) => {
     const embed = new EmbedBuilder()
         .setColor("Blue")
@@ -197,7 +199,7 @@ const nsfwPass = async (channel: TextBasedChannel) => {
         .setColor("Red")
         .setTitle("🔞 『위험구역 출입증』")
         .setDescription("위험구역에서는 대한민국 법을 위반하지 않는 한 어떠한 행위도 제재하지 않습니다.\n"
-                        + "출입증을 얻은 상태에서 한번 더 누르시면 제거됩니다.");
+        + "출입증을 얻은 상태에서 한번 더 누르시면 제거됩니다.");
     const row = new ActionRow(
         new ButtonBuilder()
             .setCustomId("selectroles_nsfwpass")

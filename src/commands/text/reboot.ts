@@ -3,7 +3,7 @@ import { TextCommand } from "structure/TextCommand";
 
 export default new TextCommand({
     name: "reboot",
-    async execute(msg) {
+    execute: async (msg) => {
         if (msg.author.id !== OWNER_ID) {
             return;
         }

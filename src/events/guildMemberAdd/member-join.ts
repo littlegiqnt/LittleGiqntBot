@@ -7,8 +7,8 @@ export default createGuildMemberAddEventListener(async (member) => {
     // return if it is not my personal private server
     if (member.guild.id !== GUILD_ID) return;
 
-    reloadMembersCount(member.client);
+    await reloadMembersCount(member.client);
     if (!member.pending) {
-        logUtil.userJoin(member);
+        await logUtil.userJoin(member);
     }
 });

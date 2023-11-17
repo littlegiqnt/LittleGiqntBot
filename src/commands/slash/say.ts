@@ -4,24 +4,25 @@ import logUtil from "utils/log";
 
 export default new SlashCommand({
     name: "say",
-    args: [
+    options: [
         {
             type: ApplicationCommandOptionType.String,
             name: "message",
             description: "보낼 메세지",
+            required: true,
         },
     ],
-    execute(interaction) {
+    execute: async (interaction) => {
         const msg = interaction.options.getString("message");
         if (msg == null) return;
-        interaction.channel?.send({
+        await logUtil.sayCommand(interaction.user, msg);
+        await interaction.channel?.send({
             content: msg,
         });
-        interaction.reply({
+        await interaction.reply({
             ephemeral: true,
             content: "✓",
         })
             .then(() => interaction.deleteReply());
-        logUtil.sayCommand(interaction.user, msg);
     },
 });

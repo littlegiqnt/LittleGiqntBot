@@ -1,19 +1,19 @@
-import type { ApplicationCommandSubGroup, ChatInputCommandInteraction } from "discord.js";
+import type { ApplicationCommandSubGroupData, AutocompleteInteraction, ChatInputCommandInteraction } from "discord.js";
 import { ApplicationCommandOptionType } from "discord.js";
 import type { BaseSlashCommandOptions } from "./BaseSlashCommand";
 import { BaseSlashCommand } from "./BaseSlashCommand";
 import type { SubCommand } from "./SubCommand";
 
 export interface SubCommandGroupOptions extends Pick<BaseSlashCommandOptions, "name"> {
-    readonly subCommands: Array<SubCommand>
+    readonly subCommands: SubCommand[]
 }
 
-export class SubCommandGroup extends BaseSlashCommand {
-    private readonly subCommands: Array<SubCommand>;
+export class SubCommandGroup extends BaseSlashCommand<ApplicationCommandSubGroupData> {
+    public readonly subCommands: SubCommand[];
 
-    constructor(options: SubCommandGroupOptions) {
+    public constructor(options: SubCommandGroupOptions) {
         super({
-            execute: (interaction) => this.execute(interaction),
+            execute: interaction => this.execute(interaction),
             ...options,
         });
         this.subCommands = options.subCommands;
@@ -24,20 +24,19 @@ export class SubCommandGroup extends BaseSlashCommand {
             for (const subCommand of this.subCommands) {
                 if (subCommand.isMine(interaction)) return subCommand.execute(interaction);
             }
-        } else {
-            super.execute(interaction); return;
         }
+        return super.execute(interaction);
     }
 
-    public override isMine(interaction: ChatInputCommandInteraction): boolean {
+    public override isMine(interaction: ChatInputCommandInteraction | AutocompleteInteraction): boolean {
         return interaction.options.getSubcommandGroup(false) === this.name;
     }
 
-    public override toRaw(): ApplicationCommandSubGroup {
+    public override toRaw(): ApplicationCommandSubGroupData {
         return {
-            ...super.toRaw(),
+            ...super.getRawPart(),
             type: ApplicationCommandOptionType.SubcommandGroup as const,
-            options: this.subCommands?.map((sub) => sub.toRaw()),
+            options: this.subCommands?.map(sub => sub.toRaw()),
         };
     }
 }

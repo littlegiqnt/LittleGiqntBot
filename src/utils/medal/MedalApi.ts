@@ -1,3 +1,7 @@
+/* eslint-disable ts/no-unsafe-argument */
+/* eslint-disable ts/no-unsafe-return */
+/* eslint-disable ts/no-unsafe-member-access */
+/* eslint-disable ts/no-unsafe-assignment */
 import * as axios from "axios";
 
 export default class MedalApi {
@@ -49,13 +53,13 @@ export default class MedalApi {
             ? `&categoryId=${categoryId}`
             : "";
         const maxPerRequest = 1000;
-        // eslint-disable-next-line no-constant-condition
+
         while (true) {
             const limit = max != null
                 ? Math.min(max - offset, maxPerRequest)
                 : maxPerRequest;
             data = (
-            // eslint-disable-next-line no-await-in-loop
+
                 await this.axios.get(
                     `https://api-v2.medal.tv/content?userId=${userId}${category}&limit=${limit}&offset=${offset}`,
                 )
@@ -99,7 +103,7 @@ export default class MedalApi {
     public async getContent(contentId: string) {
         const { data: content } = await this.axios.get(`https://medal.tv/api/content/${contentId}`);
         const quality = ["1080", "720", "480", "360", "240", "144"];
-        const bestQuality = quality.find((q) => content[`contentUrl${q}p`]);
+        const bestQuality = quality.find(q => content[`contentUrl${q}p`]);
         content.bestQuality = bestQuality;
         content.contentUrlBestQuality = content[`contentUrl${bestQuality}p`];
         return content;

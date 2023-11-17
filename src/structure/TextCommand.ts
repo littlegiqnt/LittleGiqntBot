@@ -13,11 +13,13 @@ export class TextCommand {
         this.name = options.name;
         this._execute = options.execute;
     }
+
     public isMine(msg: Message): boolean {
         return msg.content.toLowerCase()
             .startsWith((PREFIX + this.name).toLowerCase())
             && msg.content.slice(PREFIX.length) != null;
     }
+
     public execute(msg: Message) {
         return this._execute(msg, msg.content.slice(PREFIX.length + this.name.length));
     }

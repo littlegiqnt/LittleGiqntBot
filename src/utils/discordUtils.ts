@@ -1,5 +1,6 @@
 import { GUILD_ID } from "config";
-import { BaseInteraction, Channel, Client, EmbedBuilder, Message, TextChannel } from "discord.js";
+import type { BaseInteraction, Channel, Client, TextChannel } from "discord.js";
+import { EmbedBuilder, Message } from "discord.js";
 import logUtil from "./log";
 
 export const isNormalTextChannel = (channel: Channel): channel is TextChannel => channel.isTextBased() && !channel.isThread() && !channel.isDMBased();
@@ -9,14 +10,16 @@ export const reloadMembersCount = async (client: Client) => {
     await guild.fetch();
     const memberCountChannel = guild.channels.cache.get("1023190822692323369");
     if (memberCountChannel == null) return;
-    memberCountChannel.setName(`👤┃${guild.memberCount}명`);
+    await memberCountChannel.setName(`👤┃${guild.memberCount}명`);
 };
 
 export const handleErrorReply = async (error: unknown, replyTo?: BaseInteraction | Message) => {
+    await logUtil.error(error);
+
     if (!(error instanceof Error)) {
         return;
     }
-    logUtil.error(error);
+
     if (replyTo == null) return;
 
     const embed = new EmbedBuilder()
@@ -24,12 +27,12 @@ export const handleErrorReply = async (error: unknown, replyTo?: BaseInteraction
         .setTitle("엇, 오류가 발생했어요..")
         .setDescription("관리자에게 문의해 주세요!");
     if (replyTo instanceof Message) {
-        replyTo.reply({ embeds: [embed] });
+        replyTo.reply({ embeds: [embed] }).catch(() => undefined);
     } else if (replyTo.isRepliable()) {
         if (replyTo.deferred || replyTo.replied) {
-            replyTo.editReply({ embeds: [embed] });
+            replyTo.editReply({ embeds: [embed] }).catch(() => undefined);
         } else {
-            replyTo.reply({ embeds: [embed], ephemeral: true });
+            replyTo.reply({ embeds: [embed], ephemeral: true }).catch(() => undefined);
         }
     }
 };

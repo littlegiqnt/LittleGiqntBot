@@ -1,31 +1,29 @@
 import { OWNER_ID } from "config";
 import { EmbedBuilder, escapeMarkdown } from "discord.js";
 import { TextCommand } from "structure/TextCommand";
-import isProduction from "utils/isProduction";
+import { isProduction } from "utils/utils";
 
 export default new TextCommand({
-    name: isProduction()
-        ? "eval"
-        : "testeval",
-    async execute(msg, args) {
+    name: isProduction ? "eval" : "testeval",
+    execute: async (msg, args) => {
         if (msg.author.id !== OWNER_ID) {
             return;
         }
         try {
-            const result = await eval(args) as unknown;
+            // eslint-disable-next-line no-eval
+            const result = String(await eval(args));
             await msg.reply({
                 embeds: [
                     new EmbedBuilder()
-                        .setColor("White")
-                        .setTitle("Eval")
-                        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-                        .setDescription("" + result),
+                        .setColor("#FFFFFF")
+                        .setTitle("Evaluation Result")
+                        .setDescription(escapeMarkdown(result)),
                 ],
             });
         } catch (e) {
             const embed = new EmbedBuilder()
-                .setColor("Red")
-                .setTitle("오류 발생!");
+                .setColor("#B10000")
+                .setTitle("Evaluation Error");
             if (e instanceof Error) {
                 embed.setDescription(escapeMarkdown(e.stack ?? ""));
             } else {

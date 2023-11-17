@@ -7,8 +7,7 @@ export default new SubCommand({
     description: {
         en: "버튼 스타일 목록 보기",
     },
-    args: [],
-    async execute(interaction) {
+    execute: async (interaction) => {
         const row = new ActionRow<ButtonBuilder>(
             new ButtonBuilder()
                 .setCustomId("Primary")

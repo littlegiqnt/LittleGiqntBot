@@ -7,4 +7,3 @@ export class ActionRow<Type extends MessageActionRowComponentBuilder> extends Ac
         this.setComponents(...components);
     }
 }
-

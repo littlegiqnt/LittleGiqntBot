@@ -1,4 +1,4 @@
-import { TextCommand } from "structure/TextCommand";
+import type { TextCommand } from "structure/TextCommand";
 import evaljs from "./evaljs";
 import reboot from "./reboot";
 

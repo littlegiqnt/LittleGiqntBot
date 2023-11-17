@@ -1,4 +1,4 @@
-import { VoiceChannel, VoiceState } from "discord.js";
+import type { VoiceChannel, VoiceState } from "discord.js";
 import { DynamicVcManager } from "utils/dynamic-vc/dynamic-vc";
 import createVoiceStateUpdateEventListener from "./createVoiceStateUpdateEventListener";
 

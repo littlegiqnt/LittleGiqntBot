@@ -1,3 +1,5 @@
+/* eslint-disable ts/no-unsafe-argument */
+
 import { ApplicationCommandOptionType, EmbedBuilder } from "discord.js";
 import { SubCommand } from "structure/interaction/command/SubCommand";
 import logUtil from "utils/log";
@@ -12,18 +14,19 @@ export default new SubCommand({
         en: "Download medal clip",
         ko: "Medal 클립 다운로드",
     },
-    args: [
+    options: [
         {
             type: ApplicationCommandOptionType.String,
             name: "url",
             description: "url of the medal clip",
+            required: true,
         },
     ],
-    async execute(interaction) {
+    execute: async (interaction) => {
         const url = interaction.options.getString("url")!;
         const clip = await getMedalClip(url);
         if (clip == null) {
-            interaction.reply({
+            await interaction.reply({
                 embeds: [
                     new EmbedBuilder()
                         .setColor("Red")
@@ -31,9 +34,9 @@ export default new SubCommand({
                         .setDescription("혹시 url를 잘못 입력하신건 아닌지 확인해 보세요.\nFailed to fetch."),
                 ],
             });
-            logUtil.medalDownloadCommand(interaction.user, url, "failed");
+            await logUtil.medalDownloadCommand(interaction.user, url, "failed");
         } else {
-            interaction.reply({
+            await interaction.reply({
                 embeds: [
                     new EmbedBuilder()
                         .setColor("Green")
@@ -42,7 +45,7 @@ export default new SubCommand({
                         .setDescription(`Raw Video Link: [Click](${clip.contentUrlBestQuality})`),
                 ],
             });
-            logUtil.medalDownloadCommand(interaction.user, url, clip.contentUrlBestQuality);
+            await logUtil.medalDownloadCommand(interaction.user, url, clip.contentUrlBestQuality);
         }
     },
 });

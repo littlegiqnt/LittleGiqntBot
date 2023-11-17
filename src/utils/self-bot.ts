@@ -1,9 +1,17 @@
 import { GUILD_ID } from "config";
-import { GuildMember, User } from "discord.js";
+import type { GuildMember } from "discord.js";
+import { User } from "discord.js";
 import dbManager from "structure/DBManager";
 import { SelfBot } from "structure/SelfBot";
 
 const selfbots = new Map<string, SelfBot>();
+
+const removeSelfBot = (userId: string) => {
+    const selfbot = selfbots.get(userId);
+    if (selfbot == null) return;
+    selfbot.client.destroy();
+    selfbots.delete(userId);
+};
 
 export const loginSelfBot = async (user: User): Promise<boolean> => {
     removeSelfBot(user.id);
@@ -17,13 +25,6 @@ export const loginSelfBot = async (user: User): Promise<boolean> => {
     if (!await selfbot.login()) return false;
     selfbots.set(user.id, selfbot);
     return true;
-};
-
-const removeSelfBot = (userId: string) => {
-    const selfbot = selfbots.get(userId);
-    if (selfbot == null) return;
-    selfbot.client.destroy();
-    selfbots.delete(userId);
 };
 
 export const getSelfBot = (userId: string) => selfbots.get(userId);

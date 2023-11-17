@@ -11,12 +11,12 @@ export default new SubCommand({
         en: "Do you want to cancel the reminder?",
         ko: "알림을 취소할까요?",
     },
-    async execute(interaction) {
+    execute: async (interaction) => {
         const user = interaction.user;
         const reminder = reminders.get(user.id);
 
         if (reminder == null) {
-            interaction.reply({ embeds: [
+            await interaction.reply({ embeds: [
                 new EmbedBuilder()
                     .setColor("Red")
                     .setTitle("어엇")
@@ -27,7 +27,7 @@ export default new SubCommand({
 
         clearTimeout(reminder.timeout);
         reminders.delete(user.id);
-        interaction.reply({ embeds: [
+        await interaction.reply({ embeds: [
             new EmbedBuilder()
                 .setColor("Blue")
                 .setTitle("성공")

@@ -1,5 +1,6 @@
 import { GUILD_ID } from "config";
 import type { Client, Role } from "discord.js";
+
 type RolesIdType = Record<string, string>;
 
 class RolesManager {

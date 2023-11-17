@@ -1,12 +1,12 @@
 import logUtil from "utils/log";
-import isProduction from "./isProduction";
+import { isProduction } from "./utils";
 
-export default async () => {
+export default () => {
     process.on("uncaughtException", (err) => {
         console.log(err);
-        if (isProduction()) {
+        if (isProduction) {
             logUtil.error(err)
-                .then(() => process.exit(1));
+                .then(() => process.exit(1)).catch(() => { /* empty */ });
         }
     });
 };

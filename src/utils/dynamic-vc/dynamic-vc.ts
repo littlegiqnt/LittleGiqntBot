@@ -1,5 +1,6 @@
 import { DYNAMIC_VC_MAX_NUMBER } from "config";
-import { CategoryChannel, ChannelType, Client, GuildMember, VoiceChannel } from "discord.js";
+import type { CategoryChannel, Client, GuildMember, VoiceChannel } from "discord.js";
+import { ChannelType } from "discord.js";
 import TaskQueue from "structure/TaskQueue";
 
 export class DynamicVcManager {
@@ -37,7 +38,7 @@ export class DynamicVcManager {
     public onJoinCreateChannel(member: GuildMember) {
         this.createQueue.enqueue(async () => {
             if (this.channels.length >= DYNAMIC_VC_MAX_NUMBER) {
-                member.voice?.disconnect();
+                await member.voice?.disconnect();
                 return;
             }
             const num = this.getAvailableNumber();
@@ -45,7 +46,7 @@ export class DynamicVcManager {
                 type: ChannelType.GuildVoice,
                 name: DynamicVcManager.PREFIX + num,
             });
-            member.voice?.setChannel(this.channels[num - 1]);
+            await member.voice?.setChannel(this.channels[num - 1]);
         });
     }
 
@@ -59,7 +60,7 @@ export class DynamicVcManager {
     }
 
     private getVoiceChannelNumber(channelName: string) {
-        return parseInt(channelName.substring(DynamicVcManager.PREFIX.length));
+        return Number.parseInt(channelName.substring(DynamicVcManager.PREFIX.length));
     }
 
     public onLeaveCreateChannel(channel: VoiceChannel) {
@@ -67,7 +68,7 @@ export class DynamicVcManager {
             if (!channel.name.startsWith(DynamicVcManager.PREFIX)) return;
             if (channel.members.size === 0) {
                 const num = this.getVoiceChannelNumber(channel.name);
-                channel.delete();
+                await channel.delete();
                 delete this.channels[num - 1];
             }
         });

@@ -1,3 +1,5 @@
+/* eslint-disable ts/no-unsafe-return */
+/* eslint-disable ts/no-unsafe-assignment */
 import MedalApi from "./MedalApi";
 
 export const getMedalClip = async (url: string) => {

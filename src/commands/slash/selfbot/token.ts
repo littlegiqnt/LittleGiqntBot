@@ -8,7 +8,7 @@ export default new SubCommand({
     nameLocales: {
         ko: "토큰",
     },
-    args: [
+    options: [
         {
             type: ApplicationCommandOptionType.String,
             name: "token",
@@ -19,12 +19,13 @@ export default new SubCommand({
             descriptionLocalizations: {
                 ko: "현재 계정의 토큰",
             },
+            required: true,
         },
     ],
-    async execute(interaction) {
+    execute: async (interaction) => {
         // 허용되지 않은 유저라면
         if (!await isAllowed(interaction.user)) {
-            interaction.reply({ content: "사용 권한이 없어요!", ephemeral: true });
+            await interaction.reply({ content: "사용 권한이 없어요!", ephemeral: true });
             return;
         }
 
@@ -33,9 +34,9 @@ export default new SubCommand({
         userDb.selfbot.token = interaction.options.getString("token")!;
         await userDb.save();
         if (await loginSelfBot(interaction.user)) {
-            interaction.editReply({ content: "실행되었어요!" });
+            await interaction.editReply({ content: "실행되었어요!" });
         } else {
-            interaction.editReply({ content: "오류가 발생했어요! 올바른 토큰을 입력했는지 확인해 주세요." });
+            await interaction.editReply({ content: "오류가 발생했어요! 올바른 토큰을 입력했는지 확인해 주세요." });
         }
     },
 });

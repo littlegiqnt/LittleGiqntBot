@@ -3,14 +3,10 @@ import { loginSelfBot } from "utils/self-bot";
 import createReadyEventListener from "./createReadyEventListener";
 
 export default createReadyEventListener(async (client) => {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     const users = await dbManager.User.find({ "selfbot.token": { $ne: null } });
-    users.forEach((user) => {
-        client.users.fetch(user.id)
-            .then((user) => {
-                loginSelfBot(user);
-            });
-    });
+    await Promise.all(users.map(user =>
+        client.users.fetch(user._id).then(user => loginSelfBot(user)),
+    ));
     // onEveryDay();
 });
 
