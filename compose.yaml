@@ -12,5 +12,5 @@ services:
     volumes:
       - dbdata:/data/db
 
-volume:
+volumes:
   dbdata:
