@@ -3,20 +3,14 @@ version: "3.9"
 services:
   bot:
     build: ./
-    networks:
-      - default
-    privileged: true
     restart: always
     environment:
       - TZ=Asia/Seoul
   db:
-    image: mongo:4.4.18
-    networks:
-      - default
-    privileged: true
+    image: mongo
     restart: always
     volumes:
-      - ./dbdata:/data/db
+      - dbdata:/data/db
 
-networks:
-  default:
+volume:
+  dbdata:
