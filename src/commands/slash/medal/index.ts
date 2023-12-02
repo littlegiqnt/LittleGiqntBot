@@ -1,4 +1,5 @@
 import { SlashCommand } from "structure/interaction/command/SlashCommand";
+import { GUILD_ID } from "config";
 import download from "./download";
 
 export default new SlashCommand({
@@ -10,4 +11,5 @@ export default new SlashCommand({
     subCommands: [
         download,
     ],
+    guildId: GUILD_ID,
 });

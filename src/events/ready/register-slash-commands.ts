@@ -9,6 +9,8 @@ export default createReadyEventListener(async (client) => {
         await commandsDataDebug();
     }
 
+    await client.application.commands.set([]);
+
     // 글로벌 슬래시 명령어 등록
     await client.application.commands.set(
         commands

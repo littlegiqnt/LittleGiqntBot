@@ -1,4 +1,3 @@
-import { GUILD_ID } from "config";
 import type { AutocompleteInteraction, ChatInputApplicationCommandData, ChatInputCommandInteraction } from "discord.js";
 import { ApplicationCommandType } from "discord.js";
 import type { BaseSlashCommandOptions } from "./BaseSlashCommand";
@@ -28,7 +27,6 @@ export class SlashCommand extends BaseSlashCommand<ChatInputApplicationCommandDa
         });
         if ("subCommands" in options) this.subCommands = options.subCommands;
         if ("guildId" in options) this.guildId = options.guildId;
-        else this.guildId = GUILD_ID;
     }
 
     public override isMine(interaction: ChatInputCommandInteraction | AutocompleteInteraction): boolean {
