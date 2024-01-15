@@ -1,16 +1,23 @@
 import type { User } from "discord.js";
-import type { PartialTypes } from "discord.js-selfbot-v13";
+import type { PartialTypes, PresenceData } from "discord.js-selfbot-v13";
 import { Client, CustomStatus } from "discord.js-selfbot-v13";
 import logUtil from "utils/log";
 
 export class SelfBot {
-    public readonly client;
+    public readonly client: Client;
 
-    public constructor(public readonly user: User, public readonly token: string, protected customStatus?: string, protected partials?: Array<PartialTypes>) {
+    public constructor(
+        public readonly user: User,
+        public readonly token: string,
+        protected customStatus?: string,
+        protected partials?: Array<PartialTypes>,
+    ) {
         this.client = new Client({
-            syncStatus: true,
-            checkUpdate: false,
             partials: partials ?? [],
+            presence: {
+                status: "idle",
+                afk: true,
+            },
         });
     }
 
@@ -45,36 +52,31 @@ export class SelfBot {
             return false;
         }
 
-        this.client.user.setStatus("idle");
-        if (this.customStatus != null) {
-            const a = new CustomStatus()
-                .setState(this.customStatus);
-            this.client.user.setActivity(a);
-        }
-        this.client.user.setAFK(true);
+        await this.updatePresence();
 
         // 로그
         await logUtil.selfbotLogin(this);
         return true;
     }
 
+    private buildPresenceData(): PresenceData {
+        const customStatus = this.customStatus == null ? undefined : new CustomStatus().setState(this.customStatus);
+        return {
+            status: "idle",
+            afk: true,
+            activities: customStatus == null ? undefined : [customStatus],
+        };
+    }
+
+    public async updatePresence() {
+        if (!this.client.isReady()) return;
+        this.client.user?.setPresence(this.buildPresenceData());
+    }
+
     public async setCustomStatus(customStatus: string | undefined): Promise<boolean> {
         this.customStatus = customStatus;
-        if (this.client.isReady()) {
-            if (customStatus == null) {
-                this.client.user?.setActivity(undefined);
-                this.client.user?.setAFK(true);
-                await logUtil.selfbotCustomStatusChange(this);
-                return true;
-            } else {
-                const a = new CustomStatus()
-                    .setState(customStatus);
-                this.client.user?.setActivity(a);
-                this.client.user?.setAFK(true);
-                await logUtil.selfbotCustomStatusChange(this);
-                return true;
-            }
-        }
+        await this.updatePresence();
+        await logUtil.selfbotCustomStatusChange(this);
         return false;
     }
 
