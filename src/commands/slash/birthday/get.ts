@@ -35,8 +35,7 @@ export default new SubCommand({
         if (user.birthday.month == null || user.birthday.day == null) {
             const embed = new EmbedBuilder()
                 .setColor("Red")
-                .setTitle("아앗.. 생일이 기억나지 않아요..")
-                .setDescription("혹시 저한테 말해주신 적이 없는 건 아닌가요..?");
+                .setDescription("생일이 기억나지 않아요..");
             await interaction.editReply({ embeds: [embed] });
         } else {
             const embed = new EmbedBuilder()

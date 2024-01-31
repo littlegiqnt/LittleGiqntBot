@@ -35,8 +35,7 @@ export default new SubCommand({
         if (user.coupleSince == null) {
             const embed = new EmbedBuilder()
                 .setColor("Red")
-                .setTitle("아앗.. 날짜가 기억나지 않아요..")
-                .setDescription("혹시 저한테 말해주신 적이 없는 건 아닌가요..?");
+                .setDescription("날짜가 기억나지 않아요..");
             await interaction.editReply({ embeds: [embed] });
             return;
         }
