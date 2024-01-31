@@ -33,7 +33,7 @@ export default createReadyEventListener(async (client) => {
 
     // 길드별로 등록
     for (const key in groupedCommands) {
-        const cmds: Array<SlashCommand> = groupedCommands[key]!;
+        const cmds: Array<SlashCommand> = groupedCommands[key];
         await client.application.commands.set(
             cmds
                 .filter(command => command.guildId)

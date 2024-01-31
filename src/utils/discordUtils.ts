@@ -8,7 +8,7 @@ export const isNormalTextChannel = (channel: Channel): channel is TextChannel =>
 export const reloadMembersCount = async (client: Client) => {
     const guild = await client.guilds.fetch(GUILD_ID);
     await guild.fetch();
-    const memberCountChannel = guild.channels.cache.get("1023190822692323369");
+    const memberCountChannel = await guild.channels.fetch("1023190822692323369");
     if (memberCountChannel == null) return;
     await memberCountChannel.setName(`👤┃${guild.memberCount}명`);
 };

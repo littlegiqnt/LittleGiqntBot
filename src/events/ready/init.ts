@@ -1,6 +1,6 @@
 import { ActivityType } from "discord.js";
 import rolesManager from "structure/RolesManager";
-import { isNormalTextChannel, reloadMembersCount } from "utils/discordUtils";
+import { reloadMembersCount } from "utils/discordUtils";
 import { manager1 } from "utils/dynamic-vc";
 import logUtil from "utils/log";
 import { isProduction } from "utils/utils";
@@ -16,10 +16,7 @@ export default createReadyEventListener(async (client) => {
     await manager1.init(client);
 
     if (isProduction) {
-        const devChannel = client.channels.cache.get("1024959239384477726")!;
-        if (isNormalTextChannel(devChannel)) {
-            await devChannel.send({ content: `봇 켜짐!\nEnvironment: ${process.env.NODE_ENV}` });
-        }
+        await logUtil.devChannel?.send({ content: `봇 켜짐!\nEnvironment: ${process.env.NODE_ENV}` });
     }
     console.log("Bot is ready");
 });

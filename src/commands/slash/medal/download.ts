@@ -1,5 +1,3 @@
-/* eslint-disable ts/no-unsafe-argument */
-
 import { ApplicationCommandOptionType, EmbedBuilder } from "discord.js";
 import { SubCommand } from "structure/interaction/command/SubCommand";
 import logUtil from "utils/log";
@@ -24,7 +22,7 @@ export default new SubCommand({
     ],
     execute: async (interaction) => {
         const url = interaction.options.getString("url")!;
-        const clip = await getMedalClip(url);
+        const clip = await getMedalClip(url) as { [key: string]: string } | null;
         if (clip == null) {
             await interaction.reply({
                 embeds: [

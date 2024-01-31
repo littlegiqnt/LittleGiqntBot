@@ -5,7 +5,7 @@ import { isProduction } from "./utils";
 
 class LogUtil {
     private userLogChannel: TextChannel | undefined;
-    private devChannel: TextChannel | undefined;
+    public devChannel: TextChannel | undefined;
     private mainChatChannel: TextChannel | undefined;
     private commandLogChannel: TextChannel | undefined;
     private selfbotLogChannel: TextChannel | undefined;
