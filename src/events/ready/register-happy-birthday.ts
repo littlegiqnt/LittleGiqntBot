@@ -25,13 +25,13 @@ export const onEveryDay = async (client: Client) => {
     });
     const birthdayUsers: Array<GuildMember> = [];
     for (const user of users) {
-        const member = guild.members.cache.get(user._id) ?? await guild.members.fetch(user._id);
+        const member = await guild.members.fetch(user._id).catch(() => undefined);
         if (member == null) continue;
         birthdayUsers.push(member);
     }
     if (birthdayUsers.length <= 0) return;
 
-    const channel = guild.channels.cache.get("1100430961243586723");
+    const channel = await guild.channels.fetch("1100430961243586723");
     if (channel == null || !isNormalTextChannel(channel)) {
         await logUtil.error("생일 알림 채널 못찾음!!");
         return;
