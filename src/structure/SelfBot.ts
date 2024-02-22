@@ -14,10 +14,7 @@ export class SelfBot {
     ) {
         this.client = new Client({
             partials: partials ?? [],
-            presence: {
-                status: "idle",
-                afk: true,
-            },
+            presence: this.buildPresenceData(),
         });
     }
 
@@ -60,11 +57,10 @@ export class SelfBot {
     }
 
     private buildPresenceData(): PresenceData {
-        const customStatus = this.customStatus == null ? undefined : new CustomStatus().setState(this.customStatus);
         return {
             status: "idle",
             afk: true,
-            activities: customStatus == null ? undefined : [customStatus],
+            activities: this.customStatus == null ? undefined : [new CustomStatus().setState(this.customStatus)],
         };
     }
 
@@ -77,7 +73,7 @@ export class SelfBot {
         this.customStatus = customStatus;
         await this.updatePresence();
         await logUtil.selfbotCustomStatusChange(this);
-        return false;
+        return true;
     }
 
     public getCustomStatus() {
