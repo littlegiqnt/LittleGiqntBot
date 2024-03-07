@@ -7,7 +7,10 @@ import { isProduction } from "utils/utils";
 import createReadyEventListener from "./createReadyEventListener";
 
 export default createReadyEventListener(async (client) => {
-    client.user.setActivity("응애", { type: ActivityType.Playing });
+    client.user.setActivity({
+        name: "뭘봐",
+        type: ActivityType.Custom,
+    });
     client.user.setStatus("dnd");
 
     await rolesManager.load(client);
