@@ -3,6 +3,7 @@ import type { GuildMember } from "discord.js";
 import { User } from "discord.js";
 import dbManager from "structure/DBManager";
 import { SelfBot } from "structure/SelfBot";
+import logUtil from "./log";
 
 const selfbots = new Map<string, SelfBot>();
 
@@ -21,9 +22,30 @@ export const loginSelfBot = async (user: User): Promise<boolean> => {
 
     // 설정된 토큰 없으면
     if (token == null) return false;
+
     const selfbot = new SelfBot(user, token, userDb.selfbot.customStatus);
     if (!await selfbot.login()) return false;
+
+    selfbot.client.on("unhandledPacket", async (packet) => {
+        if (packet.t !== "SESSIONS_REPLACE") return;
+
+        const sessions = packet.d as {
+            status: string
+            session_id: string
+            client_info: {
+                version: number
+                os: string
+                client: string
+            }
+        }[];
+
+        if (sessions.find(s => s.client_info.client === "web" && s.status === "online") == null) return;
+
+        loginSelfBot(user).catch(e => logUtil.selfbotError(selfbot, "세션 갱신 실패", e as Error));
+    });
+
     selfbots.set(user.id, selfbot);
+
     return true;
 };
 

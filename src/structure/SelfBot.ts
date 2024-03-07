@@ -48,10 +48,7 @@ export class SelfBot {
             await logUtil.selfbotError(this, "유저 아이디가 일치하지 않아 실패");
             return false;
         }
-
         await this.updatePresence();
-
-        // 로그
         await logUtil.selfbotLogin(this);
         return true;
     }
