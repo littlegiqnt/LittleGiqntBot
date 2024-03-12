@@ -39,7 +39,7 @@ export const loginSelfBot = async (user: User): Promise<boolean> => {
             }
         }[];
 
-        if (sessions.find(s => s.client_info.client === "web" && s.status === "online") == null) return;
+        if (sessions.find(s => s.client_info.client === "web" && s.status !== "idle") == null) return;
 
         loginSelfBot(user).catch(e => logUtil.selfbotError(selfbot, "세션 갱신 실패", e as Error));
     });
