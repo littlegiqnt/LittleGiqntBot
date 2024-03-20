@@ -29,19 +29,22 @@ export const loginSelfBot = async (user: User): Promise<boolean> => {
     selfbot.client.on("unhandledPacket", async (packet) => {
         if (packet.t !== "SESSIONS_REPLACE") return;
 
-        const sessions = packet.d as {
-            status: string
-            session_id: string
-            client_info: {
-                version: number
-                os: string
-                client: string
-            }
-        }[];
+        // const sessions = packet.d as {
+        //     status: string
+        //     session_id: string
+        //     client_info: {
+        //         version: number
+        //         os: string
+        //         client: string
+        //     }
+        // }[];
 
-        if (sessions.find(s => s.client_info.client === "web" && s.status !== "idle") == null) return;
+        // if (sessions.find(s => s.client_info.client === "web" && s.status !== "idle") == null) return;
 
-        loginSelfBot(user).catch(e => logUtil.selfbotError(selfbot, "세션 갱신 실패", e as Error));
+        // loginSelfBot(user).catch(e => logUtil.selfbotError(selfbot, "세션 갱신 실패", e as Error));
+
+        selfbot.client.user?.setAFK(true);
+        console.log(`[selfbot] ${selfbot.user.username} AFK 세션 갱신`);
     });
 
     selfbots.set(user.id, selfbot);
