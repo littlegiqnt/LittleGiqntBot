@@ -29,7 +29,7 @@ export const loginSelfBot = async (user: User): Promise<boolean> => {
     selfbot.client.on("unhandledPacket", async (packet) => {
         if (packet.t !== "SESSIONS_REPLACE") return;
 
-        selfbot.client.user?.setAFK(true);
+        await selfbot.updatePresence();
         await logUtil.selfbotSessionReplace(selfbot);
     });
 
