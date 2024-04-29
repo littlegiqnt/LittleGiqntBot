@@ -6,7 +6,6 @@ import { isProduction } from "./utils";
 class LogUtil {
     private userLogChannel: TextChannel | undefined;
     public devChannel: TextChannel | undefined;
-    private mainChatChannel: TextChannel | undefined;
     private commandLogChannel: TextChannel | undefined;
     private selfbotLogChannel: TextChannel | undefined;
 
@@ -16,9 +15,6 @@ class LogUtil {
         ) as TextChannel;
         this.devChannel = await client.channels.fetch(
             "1024959239384477726",
-        ) as TextChannel;
-        this.mainChatChannel = await client.channels.fetch(
-            "1031057694213296159",
         ) as TextChannel;
         this.commandLogChannel = await client.channels.fetch(
             "1102976949623726140",
