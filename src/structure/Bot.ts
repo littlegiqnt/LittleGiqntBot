@@ -3,10 +3,12 @@ import { Client, GatewayIntentBits as Intents } from "discord.js";
 import type { AllEventListener } from "./EventListener";
 
 export interface BotOptions extends Omit<ClientOptions, "intents"> {
-    readonly token: string
-    readonly intents?: Array<Intents>
+    readonly token: string;
+    readonly intents?: Array<Intents>;
 }
 export default class Bot extends Client {
+    private readonly botToken: string;
+
     public constructor(options: BotOptions) {
         super({
             ...options,
@@ -22,7 +24,7 @@ export default class Bot extends Client {
                 Intents.GuildVoiceStates,
             ],
         });
-        this.token = options.token;
+        this.botToken = options.token;
     }
 
     public registerEvents(events: Array<Array<AllEventListener>>) {
@@ -34,6 +36,6 @@ export default class Bot extends Client {
     }
 
     public async login() {
-        return super.login(this.token!);
+        return super.login(this.botToken);
     }
 }

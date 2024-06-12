@@ -1,4 +1,4 @@
-import { connect, connection, model, set } from "mongoose";
+import mongoose, { STATES, connect, model } from "mongoose";
 import type { IUser } from "schema/userSchema";
 import { userSchema } from "schema/userSchema";
 
@@ -10,7 +10,7 @@ export class DbManager {
      */
     public async connect(uri: string) {
         console.log("Connecting to DB...");
-        set("strictQuery", false);
+        mongoose.set("strictQuery", false);
         return connect(uri, {
             connectTimeoutMS: 3000,
         })
@@ -21,7 +21,7 @@ export class DbManager {
     }
 
     public isConnected(): boolean {
-        return connection.readyState === 1;
+        return mongoose.connection.readyState === STATES.connected;
     }
 
     public async loadUser(id: string) {

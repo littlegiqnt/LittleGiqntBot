@@ -1,6 +1,6 @@
 interface RemindDetail {
     userId: string
-    timeout: NodeJS.Timeout
+    timer: Timer
     end: number
 }
 

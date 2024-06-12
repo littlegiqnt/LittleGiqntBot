@@ -1,13 +1,11 @@
-import { config } from "dotenv";
 import Bot from "structure/Bot";
 import dbManager from "structure/DBManager";
 import registerExceptionListener from "utils/registerExceptionListener";
 import { DB_URI } from "config";
 import events from "./events";
 
-config();
 export const bot: Bot = new Bot({
-    token: process.env.TOKEN!,
+    token: process.env.DISCORD_BOT_TOKEN!,
 });
 
 (async () => {
@@ -18,4 +16,7 @@ export const bot: Bot = new Bot({
         .then(() => {
             registerExceptionListener();
         });
-})().catch(() => process.exit(1));
+})().catch((error) => {
+    console.error(error);
+    process.exit(1);
+});

@@ -25,7 +25,7 @@ export default new SubCommand({
             return;
         }
 
-        clearTimeout(reminder.timeout);
+        clearTimeout(reminder.timer);
         reminders.delete(user.id);
         await interaction.reply({ embeds: [
             new EmbedBuilder()

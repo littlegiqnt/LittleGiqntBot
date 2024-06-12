@@ -76,7 +76,7 @@ export default new SubCommand({
         }
 
         const ms = 1000 * 60 * (minutes + (hours * 60));
-        const timeout: ReturnType<typeof setTimeout> = setTimeout(() => {
+        const timer: ReturnType<typeof setTimeout> = setTimeout(() => {
             reminders.delete(user.id);
             interaction.channel?.send({
                 content: userMention(user.id),
@@ -93,7 +93,7 @@ export default new SubCommand({
 
         reminders.set(user.id, {
             userId: interaction.user.id,
-            timeout,
+            timer,
             end: Date.now() + ms,
         });
 
