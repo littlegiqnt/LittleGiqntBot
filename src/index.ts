@@ -5,7 +5,7 @@ import { DB_URI } from "config";
 import events from "./events";
 
 export const bot: Bot = new Bot({
-    token: process.env.DISCORD_BOT_TOKEN!,
+    token: process.env.TOKEN!,
 });
 
 (async () => {
