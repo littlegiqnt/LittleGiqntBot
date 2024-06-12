@@ -89,7 +89,7 @@ export default class MedalApi {
     }
 
     public async loadUserIdFromUrl(userUrl: string) {
-        const userIdInUrl = userUrl.match(/\/users\/([0-9]+(\/|$))/);
+        const userIdInUrl = userUrl.match(/\/users\/(\d+(\/|$))/);
         if (userIdInUrl?.[1] != null) {
             return userIdInUrl[1];
         }
@@ -103,7 +103,7 @@ export default class MedalApi {
     public async getContent(contentId: string) {
         const { data: content } = await this.axios.get(`https://medal.tv/api/content/${contentId}`);
         const quality = ["1080", "720", "480", "360", "240", "144"];
-        const bestQuality = quality.find(q => content[`contentUrl${q}p`]);
+        const bestQuality = quality.find((q) => content[`contentUrl${q}p`]);
         content.bestQuality = bestQuality;
         content.contentUrlBestQuality = content[`contentUrl${bestQuality}p`];
         return content;

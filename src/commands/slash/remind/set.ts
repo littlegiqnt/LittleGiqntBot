@@ -88,7 +88,7 @@ export default new SubCommand({
                             codeBlock(message)}`),
                 ],
                 allowedMentions: { users: [user.id] },
-            }).catch(err => logUtil.error(err));
+            }).catch((err) => logUtil.error(err));
         }, ms);
 
         reminders.set(user.id, {

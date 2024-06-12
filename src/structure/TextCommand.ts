@@ -2,8 +2,8 @@ import type { Message } from "discord.js";
 import { PREFIX } from "../config";
 
 export interface TextCommandOptions {
-    readonly name: string
-    readonly execute: (msg: Message, args: string) => void | Promise<void>
+    readonly name: string;
+    readonly execute: (msg: Message, args: string) => void | Promise<void>;
 }
 
 export class TextCommand {

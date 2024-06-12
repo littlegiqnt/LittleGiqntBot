@@ -2,7 +2,7 @@ import type { Message } from "discord.js";
 import { userMention } from "discord.js";
 import createMessageCreateEventListener from "./createMessageCreateEventListener";
 
-const urlRegex = /https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)/;
+const urlRegex = /https?:\/\/(?:www\.)?[-\w@:%.+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b[-\w()@:%+.~#?&/=]*/;
 const imageUrlRegex = /https?:\/\/.*\.(?:png|jpg)/;
 
 export default createMessageCreateEventListener(async (msg) => {
@@ -16,7 +16,7 @@ export default createMessageCreateEventListener(async (msg) => {
         await removeMsg(msg);
         return;
     }
-    if (!msg.attachments.every(attachment => attachment.contentType?.startsWith("video/mp4"))) {
+    if (!msg.attachments.every((attachment) => attachment.contentType?.startsWith("video/mp4"))) {
         await removeMsg(msg);
         return;
     }

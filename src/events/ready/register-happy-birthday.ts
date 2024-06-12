@@ -50,7 +50,7 @@ export const onEveryDay = async (client: Client) => {
         .setColor("Aqua")
         .setTitle("생일 축하해요! Happy Birthday! 🎉")
         .setDescription(
-            "오늘은 " + `${birthdayUsers.map((m => userMention(m.id))).join(", ")}님의 생일이에요!\n`
+            "오늘은 " + `${birthdayUsers.map(((m) => userMention(m.id))).join(", ")}님의 생일이에요!\n`
             + "다같이 축하의 메세지를 보내봐요.",
         ));
     if (specialUsers.length !== 0) {
@@ -58,7 +58,7 @@ export const onEveryDay = async (client: Client) => {
             .setColor("Gold")
             .setTitle("앗! 그리고 이번에는 특별 상품 수령자가 있어요!")
             .setDescription("10%의 확률로 "
-            + `${specialUsers.map((m => userMention(m.id)))
+            + `${specialUsers.map(((m) => userMention(m.id)))
                 .join(", ")}님은 이벤트에 당첨됐답니다! 축하드려요!!\n상품은 ${userMention(OWNER_ID)}님이 직접 선물로 드릴거에요.`));
     }
     await channel.send({

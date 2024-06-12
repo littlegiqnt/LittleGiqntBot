@@ -1,5 +1,5 @@
 export interface InteractionOptions<Args extends Array<any>> {
-    readonly execute: (...args: Args) => void | Promise<void>
+    readonly execute: (...args: Args) => void | Promise<void>;
 }
 
 export abstract class Interaction<T, Args extends Array<any> = [interaction: T]> {

@@ -1,16 +1,16 @@
 import { Schema } from "mongoose";
 
 export interface IUser {
-    _id: string
-    coupleSince?: Date
+    _id: string;
+    coupleSince?: Date;
     birthday: {
-        month: number
-        day: number
-    }
+        month: number;
+        day: number;
+    };
     selfbot: {
-        token?: string
-        customStatus?: string
-    }
+        token?: string;
+        customStatus?: string;
+    };
 }
 
 export const userSchema = new Schema<IUser>({

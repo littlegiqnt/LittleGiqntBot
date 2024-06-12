@@ -21,10 +21,10 @@ type AutocompleteOption = (interaction: AutocompleteInteraction) =>
     ApplicationCommandOptionChoiceData[] | undefined | Promise<ApplicationCommandOptionChoiceData[] | undefined>;
 
 export interface BaseSlashCommandOptions extends CommandOptions<TransformedArgs> {
-    readonly description?: Locales
-    readonly options?: CommandOption[]
-    readonly autocomplete?: AutocompleteOption
-    readonly onlySlash?: boolean
+    readonly description?: Locales;
+    readonly options?: CommandOption[];
+    readonly autocomplete?: AutocompleteOption;
+    readonly onlySlash?: boolean;
 }
 
 export abstract class BaseSlashCommand<T> extends Command<ChatInputCommandInteraction, TransformedArgs> {

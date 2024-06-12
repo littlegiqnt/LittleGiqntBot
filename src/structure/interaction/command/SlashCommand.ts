@@ -6,12 +6,12 @@ import type { SubCommand } from "./SubCommand";
 import type { SubCommandGroup } from "./SubCommandGroup";
 
 export interface SlashCommandOptions extends BaseSlashCommandOptions {
-    readonly guildId?: string
+    readonly guildId?: string;
 }
 
 export interface ParentSlashCommandOptions extends Pick<BaseSlashCommandOptions, "name" | "description"> {
-    readonly subCommands: (SubCommand | SubCommandGroup)[]
-    readonly guildId?: string
+    readonly subCommands: (SubCommand | SubCommandGroup)[];
+    readonly guildId?: string;
 }
 
 export class SlashCommand extends BaseSlashCommand<ChatInputApplicationCommandData> {
@@ -22,7 +22,7 @@ export class SlashCommand extends BaseSlashCommand<ChatInputApplicationCommandDa
     public constructor(options: SlashCommandOptions | ParentSlashCommandOptions) {
         super({
             // because of ts17009 need to create unnecessary anonymous function
-            execute: interaction => this.execute(interaction),
+            execute: (interaction) => this.execute(interaction),
             ...options,
         });
         if ("subCommands" in options) this.subCommands = options.subCommands;
@@ -50,7 +50,7 @@ export class SlashCommand extends BaseSlashCommand<ChatInputApplicationCommandDa
         return {
             ...super.getRawPart(),
             type: ApplicationCommandType.ChatInput as const,
-            options: this.subCommands?.map(sub => sub.toRaw()) ?? this.options,
+            options: this.subCommands?.map((sub) => sub.toRaw()) ?? this.options,
         };
     }
 }

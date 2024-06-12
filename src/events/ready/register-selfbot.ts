@@ -4,8 +4,8 @@ import createReadyEventListener from "./createReadyEventListener";
 
 export default createReadyEventListener(async (client) => {
     const users = await dbManager.User.find({ "selfbot.token": { $ne: null } });
-    await Promise.all(users.map(user =>
-        client.users.fetch(user._id).then(user => loginSelfBot(user)),
+    await Promise.all(users.map((user) =>
+        client.users.fetch(user._id).then((user) => loginSelfBot(user)),
     ));
     // onEveryDay();
 });

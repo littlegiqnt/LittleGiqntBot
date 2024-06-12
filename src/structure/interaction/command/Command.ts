@@ -3,8 +3,8 @@ import type { InteractionOptions } from "../Interaction";
 import { Interaction } from "../Interaction";
 
 export interface CommandOptions<Args extends unknown[]> extends InteractionOptions<Args> {
-    readonly name: string
-    readonly nameLocales?: LocaleOption
+    readonly name: string;
+    readonly nameLocales?: LocaleOption;
 }
 
 export abstract class Command<T, Args extends unknown[] = [T]> extends Interaction<T, Args> {

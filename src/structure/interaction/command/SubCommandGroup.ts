@@ -5,7 +5,7 @@ import { BaseSlashCommand } from "./BaseSlashCommand";
 import type { SubCommand } from "./SubCommand";
 
 export interface SubCommandGroupOptions extends Pick<BaseSlashCommandOptions, "name"> {
-    readonly subCommands: SubCommand[]
+    readonly subCommands: SubCommand[];
 }
 
 export class SubCommandGroup extends BaseSlashCommand<ApplicationCommandSubGroupData> {
@@ -13,7 +13,7 @@ export class SubCommandGroup extends BaseSlashCommand<ApplicationCommandSubGroup
 
     public constructor(options: SubCommandGroupOptions) {
         super({
-            execute: interaction => this.execute(interaction),
+            execute: (interaction) => this.execute(interaction),
             ...options,
         });
         this.subCommands = options.subCommands;
@@ -36,7 +36,7 @@ export class SubCommandGroup extends BaseSlashCommand<ApplicationCommandSubGroup
         return {
             ...super.getRawPart(),
             type: ApplicationCommandOptionType.SubcommandGroup as const,
-            options: this.subCommands?.map(sub => sub.toRaw()),
+            options: this.subCommands?.map((sub) => sub.toRaw()),
         };
     }
 }
