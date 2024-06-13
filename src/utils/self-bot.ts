@@ -3,6 +3,7 @@ import type { GuildMember } from "discord.js";
 import { User } from "discord.js";
 import dbManager from "structure/DBManager";
 import { SelfBot } from "structure/SelfBot";
+import type { Collection, Message, Snowflake } from "discord.js-selfbot-v13";
 import logUtil from "./log";
 
 const selfbots = new Map<string, SelfBot>();
@@ -31,6 +32,30 @@ export const loginSelfBot = async (user: User): Promise<boolean> => {
 
         await selfbot.updatePresence();
         await logUtil.selfbotSessionReplace(selfbot);
+    });
+
+    selfbot.client.on("messageCreate", async (msg) => {
+        if (msg.author.id !== selfbot.client.user?.id) return;
+        if (msg.channel.type !== "DM") return;
+
+        // purge all messages in dm
+        if (msg.content === "!purgeall") {
+            const channel = msg.channel;
+            await channel.send("Deleting all my messages...");
+            // Delete all author's messages
+            let lastMessage: Message | undefined = msg;
+            while (lastMessage != null) {
+                const prevLastMessage = lastMessage;
+                const result: Collection<Snowflake, Message> = await channel.messages.fetch(
+                    { limit: 100, before: prevLastMessage.id },
+                );
+                if (result.size === 0) break;
+                const messages = [...result.values()].filter((m) => m.author.id === selfbot.client.user?.id);
+                lastMessage = messages.pop();
+                await Promise.all([prevLastMessage, ...messages].map((m) => m.delete().catch(console.error)));
+            }
+            await channel.send("Done!");
+        }
     });
 
     selfbots.set(user.id, selfbot);
