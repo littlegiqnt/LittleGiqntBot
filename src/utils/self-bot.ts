@@ -3,8 +3,8 @@ import type { GuildMember } from "discord.js";
 import { User } from "discord.js";
 import dbManager from "structure/DBManager";
 import { SelfBot } from "structure/SelfBot";
-import type { Collection, Message, Snowflake } from "discord.js-selfbot-v13";
-import logUtil from "./log";
+import type { Message, MessageSearchOptions, Snowflake, TextChannel } from "discord.js-selfbot-v13";
+import { Collection } from "discord.js-selfbot-v13";
 
 const selfbots = new Map<string, SelfBot>();
 
@@ -29,32 +29,49 @@ export const loginSelfBot = async (user: User): Promise<boolean> => {
 
     selfbot.client.on("unhandledPacket", async (packet) => {
         if (packet.t !== "SESSIONS_REPLACE") return;
-
         await selfbot.updatePresence();
-        await logUtil.selfbotSessionReplace(selfbot);
     });
 
     selfbot.client.on("messageCreate", async (msg) => {
         if (msg.author.id !== selfbot.client.user?.id) return;
-        if (msg.channel.type !== "DM") return;
 
         // purge all messages in dm
-        if (msg.content === "!purgeall") {
-            const channel = msg.channel;
-            await channel.send("Deleting all my messages...");
-            // Delete all author's messages
-            let lastMessage: Message | undefined = msg;
-            while (lastMessage != null) {
-                const prevLastMessage = lastMessage;
-                const result: Collection<Snowflake, Message> = await channel.messages.fetch(
-                    { limit: 100, before: prevLastMessage.id },
-                );
-                if (result.size === 0) break;
-                const messages = [...result.values()].filter((m) => m.author.id === selfbot.client.user?.id);
-                lastMessage = messages.pop();
-                await Promise.all([prevLastMessage, ...messages].map((m) => m.delete().catch(console.error)));
+        if (msg.content.startsWith("!recent")) {
+            const target = msg.mentions.parsedUsers.first();
+            if (target == null) return;
+            await msg.reply(`최근 메시지를 가져오는 중...`);
+            const profile = await target.getProfile() as {
+                mutual_guilds: Array<{ id: string; nick: string }>;
+            };
+            // get recent messages of the target in all channels
+            const messages = new Collection<Snowflake, Message>();
+            for await (const guildId of profile.mutual_guilds.map((guild) => guild.id)) {
+                const guild = await selfbot.client.guilds.fetch(guildId);
+                try {
+                    const textChannel = guild.channels.cache.find((channel) => channel.type === "GUILD_TEXT") as TextChannel;
+                    if (textChannel == null) {
+                        throw new Error(`TextChannel not found in guild ${guild.name}`);
+                    }
+                    const result = await textChannel.messages.search({
+                        authors: [target.id],
+                    } as MessageSearchOptions);
+                    const first = result.messages.first();
+                    if (first != null) messages.set(first.id, first);
+                } catch (error) {
+                    console.error(error);
+                }
             }
-            await channel.send("Done!");
+            const iterator = messages
+                .sort((a, b) => a.createdTimestamp - b.createdTimestamp)
+                .values();
+            const lines: string[] = [];
+            for (const message of iterator) {
+                if (lines.length >= 100) {
+                    break;
+                }
+                lines.push(message.url);
+            }
+            await msg.reply(lines.join("\n"));
         }
     });
 

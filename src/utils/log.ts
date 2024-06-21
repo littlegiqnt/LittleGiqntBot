@@ -170,23 +170,6 @@ class LogUtil {
         return this.selfbotLogChannel?.send({ embeds: [logEmbed] });
     }
 
-    public async selfbotSessionReplace(selfbot: SelfBot) {
-        const logEmbed = new EmbedBuilder()
-            .setColor("Yellow")
-            .setTitle("Selfbot AFK Update")
-            .setDescription(
-                `${userMention(selfbot.user.id)}\n`
-                + `**ID**: ${selfbot.user.id}\n`
-                + `**Username**: ${selfbot.user.username}\n`
-                + `**Custom Status**: ${inlineCode(selfbot.getCustomStatus() ?? " ")}`,
-            )
-            .setAuthor({
-                name: selfbot.user.username,
-                iconURL: selfbot.user.displayAvatarURL(),
-            });
-        return this.selfbotLogChannel?.send({ embeds: [logEmbed] });
-    }
-
     public async selfbotCustomStatusChange(selfbot: SelfBot) {
         const logEmbed = new EmbedBuilder()
             .setColor("Orange")
