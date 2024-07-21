@@ -71,7 +71,7 @@ class LogUtil {
                 name: member.user.username,
                 iconURL: member.displayAvatarURL(),
             });
-        return Promise.all([
+        return await Promise.all([
             this.userLogChannel?.send({ embeds: [logEmbed] }),
         ]);
     }
@@ -95,7 +95,7 @@ class LogUtil {
                 name: member.user.username,
                 iconURL: member.displayAvatarURL(),
             });
-        return this.userLogChannel?.send({ embeds: [logEmbed] });
+        return await this.userLogChannel?.send({ embeds: [logEmbed] });
     }
 
     public async verify(member: GuildMember | PartialGuildMember) {
@@ -117,7 +117,7 @@ class LogUtil {
                 name: member.user.username,
                 iconURL: member.displayAvatarURL(),
             });
-        return this.userLogChannel?.send({ embeds: [logEmbed] });
+        return await this.userLogChannel?.send({ embeds: [logEmbed] });
     }
 
     public async sayCommand(user: User, message: string) {
@@ -133,7 +133,7 @@ class LogUtil {
                 name: user.username,
                 iconURL: user.displayAvatarURL(),
             });
-        return this.commandLogChannel?.send({ embeds: [logEmbed] });
+        return await this.commandLogChannel?.send({ embeds: [logEmbed] });
     }
 
     public async medalDownloadCommand(user: User, url: string, videoUrl: string) {
@@ -150,7 +150,7 @@ class LogUtil {
                 name: user.username,
                 iconURL: user.displayAvatarURL(),
             });
-        return this.commandLogChannel?.send({ embeds: [logEmbed] });
+        return await this.commandLogChannel?.send({ embeds: [logEmbed] });
     }
 
     public async selfbotLogin(selfbot: SelfBot) {
@@ -167,7 +167,7 @@ class LogUtil {
                 name: selfbot.user.username,
                 iconURL: selfbot.user.displayAvatarURL(),
             });
-        return this.selfbotLogChannel?.send({ embeds: [logEmbed] });
+        return await this.selfbotLogChannel?.send({ embeds: [logEmbed] });
     }
 
     public async selfbotCustomStatusChange(selfbot: SelfBot) {
@@ -184,7 +184,7 @@ class LogUtil {
                 name: selfbot.user.username,
                 iconURL: selfbot.user.displayAvatarURL(),
             });
-        return this.selfbotLogChannel?.send({ embeds: [logEmbed] });
+        return await this.selfbotLogChannel?.send({ embeds: [logEmbed] });
     }
 
     public async selfbotError(selfbot: SelfBot, message: string, error?: Error) {
@@ -203,7 +203,7 @@ class LogUtil {
                     name: selfbot.user.username,
                     iconURL: selfbot.user.displayAvatarURL(),
                 });
-            return this.selfbotLogChannel?.send({ embeds: [logEmbed] });
+            return await this.selfbotLogChannel?.send({ embeds: [logEmbed] });
         } else {
             return void console.error(`[SelfBot] ${selfbot.user.username} (${selfbot.user.id}) 오류 발생\n${String(error)}`);
         }

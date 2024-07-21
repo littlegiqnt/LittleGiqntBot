@@ -1,11 +1,8 @@
-/* eslint-disable ts/no-unsafe-argument */
-/* eslint-disable ts/no-unsafe-return */
-/* eslint-disable ts/no-unsafe-member-access */
-/* eslint-disable ts/no-unsafe-assignment */
-import * as axios from "axios";
+import type { AxiosInstance, AxiosResponse } from "axios";
+import axios from "axios";
 
 export default class MedalApi {
-    private axios: axios.AxiosInstance;
+    private axios: AxiosInstance;
 
     public constructor() {
         this.axios = axios.create({
@@ -46,7 +43,7 @@ export default class MedalApi {
     }
 
     public async listVideos(userId: string, max?: number, categoryId?: string) {
-        let objs: Array<axios.AxiosResponse> = [];
+        let objs: Array<AxiosResponse> = [];
         let data = null;
         let offset = 0;
         const category = categoryId != null
@@ -89,13 +86,13 @@ export default class MedalApi {
     }
 
     public async loadUserIdFromUrl(userUrl: string) {
-        const userIdInUrl = userUrl.match(/\/users\/(\d+(\/|$))/);
+        const userIdInUrl = userUrl.match(/\/users\/(\d+(?:\/|$))/);
         if (userIdInUrl?.[1] != null) {
             return userIdInUrl[1];
         }
         const usernameInUrl = userUrl.match(/\/u\/(.+)/);
         if (usernameInUrl?.[1] != null) {
-            return this.loadUserIdFromUsername(usernameInUrl[1]);
+            return await this.loadUserIdFromUsername(usernameInUrl[1]);
         }
         return null;
     }
@@ -109,7 +106,7 @@ export default class MedalApi {
         return content;
     }
 
-    public async loadClipIdFromUrl(clipUrl: string) {
+    public getClipIdFromUrl(clipUrl: string) {
         const regex = /clips\/([^/]+)/;
         const match = clipUrl.match(regex);
         return match?.[1];

@@ -11,7 +11,7 @@ export class DbManager {
     public async connect(uri: string) {
         console.log("Connecting to DB...");
         mongoose.set("strictQuery", false);
-        return connect(uri, {
+        return await connect(uri, {
             connectTimeoutMS: 3000,
         })
             .catch((error) => {

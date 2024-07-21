@@ -23,7 +23,7 @@ export class DynamicVcManager {
         await this.category.fetch();
 
         const children = this.category.children.cache;
-        return Promise.all(children.map(async (c) => {
+        return await Promise.all(children.map(async (c) => {
             if (c.type !== ChannelType.GuildVoice || !c.name.startsWith(DynamicVcManager.PREFIX)) return;
 
             const num = this.getVoiceChannelNumber(c.name);

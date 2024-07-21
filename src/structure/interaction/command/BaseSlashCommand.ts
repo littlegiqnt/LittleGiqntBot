@@ -68,14 +68,14 @@ export abstract class BaseSlashCommand<T> extends Command<ChatInputCommandIntera
             }
             this.lastExecutedAt.set(interaction.user.id, Date.now());
         }
-        return super.execute(interaction);
+        return await super.execute(interaction);
     }
 
     public async autocomplete(interaction: AutocompleteInteraction) {
         if (this._autocomplete == null) {
-            return interaction.respond([]);
+            return await interaction.respond([]);
         }
-        return interaction.respond(await this._autocomplete(interaction) ?? []);
+        return await interaction.respond(await this._autocomplete(interaction) ?? []);
     }
 
     protected override transform(interaction: ChatInputCommandInteraction): [ChatInputCommandInteraction] {

@@ -57,18 +57,18 @@ export class SelfBot {
         return {
             status: "idle",
             afk: true,
-            activities: this.customStatus == null ? undefined : [new CustomStatus().setState(this.customStatus)],
+            activities: this.customStatus == null ? undefined : [new CustomStatus(this.client).setState(this.customStatus)],
         };
     }
 
-    public async updatePresence() {
+    public updatePresence() {
         if (!this.client.isReady()) return;
         this.client.user?.setPresence(this.buildPresenceData());
     }
 
     public async setCustomStatus(customStatus: string | undefined): Promise<boolean> {
         this.customStatus = customStatus;
-        await this.updatePresence();
+        this.updatePresence();
         await logUtil.selfbotCustomStatusChange(this);
         return true;
     }

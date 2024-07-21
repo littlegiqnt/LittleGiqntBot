@@ -26,10 +26,7 @@ export default new SlashCommand({
 
         await interaction.deferReply({ ephemeral: true });
 
-        let size = 0;
-        try {
-            size = (await channel.bulkDelete(amount)).size;
-        } catch (error) { /* empty */ }
+        const size = (await channel.bulkDelete(amount).catch(() => undefined))?.size ?? 0;
 
         const embed = new EmbedBuilder()
             .setColor("Green")

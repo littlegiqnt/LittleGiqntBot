@@ -36,6 +36,6 @@ export default class Bot extends Client {
     }
 
     public async login() {
-        return super.login(this.botToken);
+        return await super.login(this.botToken);
     }
 }

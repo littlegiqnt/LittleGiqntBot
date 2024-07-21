@@ -58,7 +58,7 @@ export default new SubCommand({
         const month = interaction.options.getInteger("month");
         const day = interaction.options.getInteger("day");
         if (month != null && month >= 1 && month <= 12
-            && day != null && day >= 1 && day <= 31) {
+          && day != null && day >= 1 && day <= 31) {
             user.birthday.month = month;
             user.birthday.day = day;
             await user.save();

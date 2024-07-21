@@ -35,7 +35,7 @@ const genderSelect = async (channel: TextBasedChannel) => {
             .setLabel("여자")
             .setStyle(ButtonStyle.Primary),
     );
-    return channel.send({ embeds: [embed], components: [row] });
+    return await channel.send({ embeds: [embed], components: [row] });
 };
 
 // eslint-disable-next-line unused-imports/no-unused-vars
@@ -61,7 +61,7 @@ const ageSelect = async (channel: TextBasedChannel) => {
             .setLabel("중학생")
             .setStyle(ButtonStyle.Primary),
     );
-    return channel.send({ embeds: [embed], components: [row] });
+    return await channel.send({ embeds: [embed], components: [row] });
 };
 
 // eslint-disable-next-line unused-imports/no-unused-vars
@@ -92,7 +92,7 @@ const loveSelect = async (channel: TextBasedChannel) => {
             .setLabel("애인 비공개")
             .setStyle(ButtonStyle.Primary),
     );
-    return channel.send({ embeds: [embed], components: [row] });
+    return await channel.send({ embeds: [embed], components: [row] });
 };
 
 // eslint-disable-next-line unused-imports/no-unused-vars
@@ -113,7 +113,7 @@ const dmSelect = async (channel: TextBasedChannel) => {
             .setLabel("DM 비허용")
             .setStyle(ButtonStyle.Primary),
     );
-    return channel.send({ embeds: [embed], components: [row] });
+    return await channel.send({ embeds: [embed], components: [row] });
 };
 
 const pingRelatedSelect = async (channel: TextBasedChannel) => {
@@ -133,7 +133,7 @@ const pingRelatedSelect = async (channel: TextBasedChannel) => {
             .setLabel("이벤트 알림 받기")
             .setStyle(ButtonStyle.Primary),
     );
-    return channel.send({ embeds: [embed], components: [row] });
+    return await channel.send({ embeds: [embed], components: [row] });
 };
 
 // eslint-disable-next-line unused-imports/no-unused-vars
@@ -191,7 +191,7 @@ const gamesSelect = async (channel: TextBasedChannel) => {
             ),
     );
 
-    return channel.send({ embeds: [embed], components: [row1] });
+    return await channel.send({ embeds: [embed], components: [row1] });
 };
 
 const nsfwPass = async (channel: TextBasedChannel) => {
@@ -207,5 +207,5 @@ const nsfwPass = async (channel: TextBasedChannel) => {
             .setLabel("출입증 받기")
             .setStyle(ButtonStyle.Primary),
     );
-    return channel.send({ embeds: [embed], components: [row] });
+    return await channel.send({ embeds: [embed], components: [row] });
 };
