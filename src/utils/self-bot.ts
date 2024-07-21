@@ -27,9 +27,9 @@ export const loginSelfBot = async (user: User): Promise<boolean> => {
     const selfbot = new SelfBot(user, token, userDb.selfbot.customStatus);
     if (!await selfbot.login()) return false;
 
-    selfbot.client.on("unhandledPacket", async (packet) => {
+    selfbot.client.on("unhandledPacket", (packet) => {
         if (packet.t !== "SESSIONS_REPLACE") return;
-        await selfbot.updatePresence();
+        selfbot.updatePresence();
     });
 
     selfbot.client.on("messageCreate", async (msg) => {
@@ -89,3 +89,13 @@ export const isAllowed = async (user: User | GuildMember): Promise<boolean> => {
 
     return member.roles.cache.has("1119125286672412703");
 };
+
+export const reLoginAllSelfBots = async () => {
+    for (const selfbot of selfbots.values()) {
+        await loginSelfBot(selfbot.user);
+    }
+};
+
+setInterval(() => {
+    reLoginAllSelfBots().catch(console.error);
+}, 1000 * 60 * 60 * 24); // 24 hours
