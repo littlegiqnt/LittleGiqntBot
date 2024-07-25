@@ -38,7 +38,7 @@ class RolesManager {
         return this.rolesId[name];
     }
 
-    public async getGrouped(groupName: keyof typeof this.rolesIdGroups) {
+    public getGrouped(groupName: keyof typeof this.rolesIdGroups) {
         const ids = this.rolesIdGroups[groupName] satisfies RolesIdType;
         const roles: Array<Role> = [];
         Object.keys(ids)

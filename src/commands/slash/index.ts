@@ -7,7 +7,6 @@ import ping from "./ping";
 import remind from "./remind";
 import say from "./say";
 import selfbot from "./selfbot";
-import setup from "./setup";
 
 const commands: Array<SlashCommand> = [
     birthday,
@@ -18,7 +17,6 @@ const commands: Array<SlashCommand> = [
     remind,
     say,
     selfbot,
-    setup,
 ];
 
 export default commands;

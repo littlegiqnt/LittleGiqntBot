@@ -87,7 +87,7 @@ export const isAllowed = async (user: User | GuildMember): Promise<boolean> => {
         ? await (await user.client.guilds.fetch(GUILD_ID)).members.fetch(user.id)
         : user;
 
-    return member.roles.cache.has("1119125286672412703");
+    return member.roles.cache.has("1266000016267411570");
 };
 
 export const reLoginAllSelfBots = async () => {
