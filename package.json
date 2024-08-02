@@ -7,17 +7,17 @@
     "check-update": "bunx npm-check-updates -ui"
   },
   "dependencies": {
-    "axios": "^1.7.2",
+    "axios": "^1.7.3",
     "discord.js": "^14.15.3",
     "discord.js-selfbot-v13": "^3.3.0",
-    "mongoose": "^8.5.1",
+    "mongoose": "^8.5.2",
     "node-schedule": "^2.1.1"
   },
   "devDependencies": {
     "@littlegiqnt/eslint-config": "github:littlegiqnt/eslint-config",
     "@types/bun": "latest",
     "@types/node-schedule": "^2.1.7",
-    "eslint": "^9.7.0",
+    "eslint": "^9.8.0",
     "nodemon": "^3.1.4",
     "typescript": "^5.5.4"
   }
