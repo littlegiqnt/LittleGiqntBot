@@ -1,5 +1,5 @@
 import type { Client, GuildMember, PartialGuildMember, TextChannel, User } from "discord.js";
-import { EmbedBuilder, codeBlock, inlineCode, userMention } from "discord.js";
+import { EmbedBuilder, codeBlock, userMention } from "discord.js";
 import type { SelfBot } from "structure/SelfBot";
 import { isProduction } from "./utils";
 
@@ -160,8 +160,7 @@ class LogUtil {
             .setDescription(
                 `${userMention(selfbot.user.id)}\n`
                 + `**ID**: ${selfbot.user.id}\n`
-                + `**Username**: ${selfbot.user.username}\n`
-                + `**Custom Status**: ${inlineCode(selfbot.getCustomStatus() ?? " ")}`,
+                + `**Username**: ${selfbot.user.username}\n`,
             )
             .setAuthor({
                 name: selfbot.user.username,
@@ -177,8 +176,7 @@ class LogUtil {
             .setDescription(
                 `${userMention(selfbot.user.id)}\n`
                 + `**ID**: ${selfbot.user.id}\n`
-                + `**Username**: ${selfbot.user.username}\n`
-                + `**Custom Status**: ${inlineCode(selfbot.getCustomStatus() ?? " ")}`,
+                + `**Username**: ${selfbot.user.username}\n`,
             )
             .setAuthor({
                 name: selfbot.user.username,
@@ -196,7 +194,6 @@ class LogUtil {
                     `${userMention(selfbot.user.id)}\n`
                     + `**ID**: ${selfbot.user.id}\n`
                     + `**Username**: ${selfbot.user.username}\n`
-                    + `**Custom Status**: ${inlineCode(selfbot.getCustomStatus() ?? " ")}\n`
                     + `**Stack**: ${error?.stack ?? "없음"}`,
                 )
                 .setAuthor({

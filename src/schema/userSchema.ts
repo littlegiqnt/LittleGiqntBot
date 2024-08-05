@@ -9,7 +9,6 @@ export interface IUser {
     };
     selfbot: {
         token?: string;
-        customStatus?: string;
     };
 }
 

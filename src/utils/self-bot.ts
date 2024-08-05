@@ -24,13 +24,15 @@ export const loginSelfBot = async (user: User): Promise<boolean> => {
     // 설정된 토큰 없으면
     if (token == null) return false;
 
-    const selfbot = new SelfBot(user, token, userDb.selfbot.customStatus);
-    if (!await selfbot.login()) return false;
-
+    const selfbot = new SelfBot(user, token);
     selfbot.client.on("unhandledPacket", (packet) => {
         if (packet.t !== "SESSIONS_REPLACE") return;
-        selfbot.updatePresence();
+        selfbot.client.user?.setAFK(true);
     });
+    selfbot.client.on("ready", (client) => {
+        client.user.setAFK(true);
+    });
+    if (!await selfbot.login()) return false;
 
     selfbot.client.on("messageCreate", async (msg) => {
         if (msg.author.id !== selfbot.client.user?.id) return;
@@ -94,6 +96,17 @@ export const reLoginAllSelfBots = async () => {
     for (const selfbot of selfbots.values()) {
         await loginSelfBot(selfbot.user);
     }
+};
+
+export const destroyAllSelfBots = () => {
+    for (const selfbot of selfbots.values()) {
+        try {
+            selfbot.client.destroy();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    selfbots.clear();
 };
 
 setInterval(() => {

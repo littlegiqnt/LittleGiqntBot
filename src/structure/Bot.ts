@@ -1,5 +1,6 @@
 import type { ClientOptions } from "discord.js";
 import { Client, GatewayIntentBits as Intents } from "discord.js";
+import { destroyAllSelfBots } from "utils/self-bot";
 import type { AllEventListener } from "./EventListener";
 
 export interface BotOptions extends Omit<ClientOptions, "intents"> {
@@ -37,5 +38,10 @@ export default class Bot extends Client {
 
     public async login() {
         return await super.login(this.botToken);
+    }
+
+    public override destroy() {
+        destroyAllSelfBots();
+        return super.destroy();
     }
 }

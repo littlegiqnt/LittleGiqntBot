@@ -8,6 +8,20 @@ export const bot: Bot = new Bot({
     token: process.env.TOKEN!,
 });
 
+let isTerminating = false;
+const terminate = () => {
+    if (isTerminating) return;
+    isTerminating = true;
+    bot.destroy()
+        .then(() => process.exit(0))
+        .catch((error) => {
+            console.error(error);
+            process.exit(1);
+        });
+};
+process.on("SIGINT", terminate);
+process.on("SIGTERM", terminate);
+
 (async () => {
     await dbManager.connect(DB_URI);
 
