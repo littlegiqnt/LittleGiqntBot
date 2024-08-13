@@ -158,13 +158,13 @@ class LogUtil {
             .setColor("Green")
             .setTitle("Selfbot Login")
             .setDescription(
-                `${userMention(selfbot.user.id)}\n`
-                + `**ID**: ${selfbot.user.id}\n`
-                + `**Username**: ${selfbot.user.username}\n`,
+                `${userMention(selfbot.owner.id)}\n`
+                + `**ID**: ${selfbot.owner.id}\n`
+                + `**Username**: ${selfbot.owner.username}\n`,
             )
             .setAuthor({
-                name: selfbot.user.username,
-                iconURL: selfbot.user.displayAvatarURL(),
+                name: selfbot.owner.username,
+                iconURL: selfbot.owner.displayAvatarURL(),
             });
         return await this.selfbotLogChannel?.send({ embeds: [logEmbed] });
     }
@@ -174,35 +174,36 @@ class LogUtil {
             .setColor("Orange")
             .setTitle("Selfbot Custom Status Changed")
             .setDescription(
-                `${userMention(selfbot.user.id)}\n`
-                + `**ID**: ${selfbot.user.id}\n`
-                + `**Username**: ${selfbot.user.username}\n`,
+                `${userMention(selfbot.owner.id)}\n`
+                + `**ID**: ${selfbot.owner.id}\n`
+                + `**Username**: ${selfbot.owner.username}\n`,
             )
             .setAuthor({
-                name: selfbot.user.username,
-                iconURL: selfbot.user.displayAvatarURL(),
+                name: selfbot.owner.username,
+                iconURL: selfbot.owner.displayAvatarURL(),
             });
         return await this.selfbotLogChannel?.send({ embeds: [logEmbed] });
     }
 
-    public async selfbotError(selfbot: SelfBot, message: string, error?: Error) {
+    public async selfbotError(selfbot: SelfBot, message: string, error?: unknown) {
+        console.debug(error);
         if (isProduction) {
             const logEmbed = new EmbedBuilder()
                 .setColor("Red")
                 .setTitle(message)
                 .setDescription(
-                    `${userMention(selfbot.user.id)}\n`
-                    + `**ID**: ${selfbot.user.id}\n`
-                    + `**Username**: ${selfbot.user.username}\n`
-                    + `**Stack**: ${error?.stack ?? "없음"}`,
+                    `${userMention(selfbot.owner.id)}\n`
+                    + `**ID**: ${selfbot.owner.id}\n`
+                    + `**Username**: ${selfbot.owner.username}\n`
+                    + `**Stack**: ${error instanceof Error ? error.stack : undefined ?? "없음"}`,
                 )
                 .setAuthor({
-                    name: selfbot.user.username,
-                    iconURL: selfbot.user.displayAvatarURL(),
+                    name: selfbot.owner.username,
+                    iconURL: selfbot.owner.displayAvatarURL(),
                 });
-            return await this.selfbotLogChannel?.send({ embeds: [logEmbed] });
+            await this.selfbotLogChannel?.send({ embeds: [logEmbed] });
         } else {
-            return void console.error(`[SelfBot] ${selfbot.user.username} (${selfbot.user.id}) 오류 발생\n${String(error)}`);
+            console.error(`[SelfBot] ${selfbot.owner.username} (${selfbot.owner.id}) 오류 발생`);
         }
     }
 }

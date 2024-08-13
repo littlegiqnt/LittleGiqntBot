@@ -3,15 +3,13 @@ import type { GuildMember } from "discord.js";
 import { User } from "discord.js";
 import dbManager from "structure/DBManager";
 import { SelfBot } from "structure/SelfBot";
-import type { Message, MessageSearchOptions, Snowflake, TextChannel } from "discord.js-selfbot-v13";
-import { Collection } from "discord.js-selfbot-v13";
 
 const selfbots = new Map<string, SelfBot>();
 
 const removeSelfBot = (userId: string) => {
     const selfbot = selfbots.get(userId);
     if (selfbot == null) return;
-    selfbot.client.destroy();
+    selfbot.disconnect({ reconnect: false });
     selfbots.delete(userId);
 };
 
@@ -25,57 +23,9 @@ export const loginSelfBot = async (user: User): Promise<boolean> => {
     if (token == null) return false;
 
     const selfbot = new SelfBot(user, token);
-    selfbot.client.on("unhandledPacket", (packet) => {
-        if (packet.t !== "SESSIONS_REPLACE") return;
-        selfbot.client.user?.setAFK(true);
-    });
-    selfbot.client.on("ready", (client) => {
-        client.user.setAFK(true);
-    });
-    if (!await selfbot.login()) return false;
-
-    selfbot.client.on("messageCreate", async (msg) => {
-        if (msg.author.id !== selfbot.client.user?.id) return;
-
-        // purge all messages in dm
-        if (msg.content.startsWith("!recent")) {
-            const target = msg.mentions.parsedUsers.first();
-            if (target == null) return;
-            await msg.reply(`최근 메시지를 가져오는 중...`);
-            const profile = await target.getProfile() as {
-                mutual_guilds: Array<{ id: string; nick: string }>;
-            };
-            // get recent messages of the target in all channels
-            const messages = new Collection<Snowflake, Message>();
-            for await (const guildId of profile.mutual_guilds.map((guild) => guild.id)) {
-                const guild = await selfbot.client.guilds.fetch(guildId);
-                try {
-                    const textChannel = guild.channels.cache.find((channel) => channel.type === "GUILD_TEXT") as TextChannel;
-                    if (textChannel == null) {
-                        throw new Error(`TextChannel not found in guild ${guild.name}`);
-                    }
-                    const result = await textChannel.messages.search({
-                        authors: [target.id],
-                    } as MessageSearchOptions);
-                    const first = result.messages.first();
-                    if (first != null) messages.set(first.id, first);
-                } catch (error) {
-                    console.error(error);
-                }
-            }
-            const iterator = messages
-                .sort((a, b) => a.createdTimestamp - b.createdTimestamp)
-                .values();
-            const lines: string[] = [];
-            for (const message of iterator) {
-                if (lines.length >= 100) {
-                    break;
-                }
-                lines.push(message.url);
-            }
-            await msg.reply(lines.join("\n"));
-        }
-    });
+    await selfbot.connect();
+    selfbot.editAFK(true);
+    selfbot.editStatus("idle");
 
     selfbots.set(user.id, selfbot);
 
@@ -94,14 +44,14 @@ export const isAllowed = async (user: User | GuildMember): Promise<boolean> => {
 
 export const reLoginAllSelfBots = async () => {
     for (const selfbot of selfbots.values()) {
-        await loginSelfBot(selfbot.user);
+        await loginSelfBot(selfbot.owner);
     }
 };
 
 export const destroyAllSelfBots = () => {
     for (const selfbot of selfbots.values()) {
         try {
-            selfbot.client.destroy();
+            selfbot.disconnect({ reconnect: false });
         } catch (error) {
             console.error(error);
         }

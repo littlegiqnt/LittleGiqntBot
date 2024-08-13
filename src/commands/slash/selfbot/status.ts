@@ -19,10 +19,10 @@ export default new SubCommand({
             return;
         }
 
-        if (selfbot.client.isReady()) {
+        if (selfbot.ready) {
             await interaction.reply({ content: "켜져있어요!", ephemeral: true });
         } else {
-            await interaction.reply({ content: "꺼져있어요..", ephemeral: true });
+            await interaction.reply({ content: "꺼져있어요.", ephemeral: true });
         }
     },
 });
