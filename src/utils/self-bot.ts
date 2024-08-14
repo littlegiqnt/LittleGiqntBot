@@ -1,5 +1,5 @@
 import { GUILD_ID } from "config";
-import type { GuildMember } from "discord.js";
+import type { Client, GuildMember } from "discord.js";
 import { User } from "discord.js";
 import dbManager from "structure/DBManager";
 import { SelfBot } from "structure/SelfBot";
@@ -51,10 +51,14 @@ export const isAllowed = async (user: User | GuildMember): Promise<boolean> => {
     return member.roles.cache.has("1266000016267411570");
 };
 
-export const reLoginAllSelfBots = async () => {
-    for (const selfbot of selfbots.values()) {
-        await loginSelfBot(selfbot.owner);
-    }
+export const createAllSelfbots = async (client: Client<true>) => {
+    const users = await dbManager.User.find({ "selfbot.token": { $ne: null } });
+    const guild = await client.guilds.fetch(GUILD_ID);
+    await Promise.all(users.map((user) =>
+        guild.members.fetch(user._id)
+            .then((member) => loginSelfBot(member.user))
+            .catch(() => dbManager.User.updateOne({ _id: user._id }, { $unset: { "selfbot.token": "" } })),
+    ));
 };
 
 export const destroyAllSelfBots = () => {
@@ -67,7 +71,3 @@ export const destroyAllSelfBots = () => {
     }
     selfbots.clear();
 };
-
-setInterval(() => {
-    reLoginAllSelfBots().catch(console.error);
-}, 1000 * 60 * 60 * 24); // 24 hours

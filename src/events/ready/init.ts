@@ -4,6 +4,7 @@ import { reloadMembersCount } from "utils/discordUtils";
 import { manager1 } from "utils/dynamic-vc";
 import logUtil from "utils/log";
 import { isProduction } from "utils/utils";
+import { createAllSelfbots } from "utils/self-bot";
 import createReadyEventListener from "./createReadyEventListener";
 
 export default createReadyEventListener(async (client) => {
@@ -22,4 +23,6 @@ export default createReadyEventListener(async (client) => {
         await logUtil.devChannel?.send({ content: `봇 켜짐!\nEnvironment: ${process.env.NODE_ENV}` });
     }
     console.log("Bot is ready");
+
+    createAllSelfbots(client).catch((error) => logUtil.error(error));
 });
