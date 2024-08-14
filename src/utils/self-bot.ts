@@ -24,15 +24,17 @@ export const loginSelfBot = async (user: User): Promise<boolean> => {
     if (token == null) return false;
 
     const selfbot = new SelfBot(user, token);
-    selfbot.on("ready", () => {
-        selfbot.editAFK(true);
-        selfbot.editStatus("idle");
-    });
+    // selfbot.on("debug", (message) => {
+    //     console.log(message);
+    // });
     selfbot.on("error", (error) => {
         console.error(error);
-        logUtil.selfbotError(selfbot, "에러 발생", error).catch(console.error);
+        logUtil.selfbotError(selfbot, "에러 발생", error).catch((error) => logUtil.error(error));
     });
     await selfbot.connect();
+    logUtil.selfbotLogin(selfbot).catch((error) => logUtil.error(error));
+    selfbot.editStatus("idle");
+    selfbot.editAFK(true);
 
     selfbots.set(user.id, selfbot);
 

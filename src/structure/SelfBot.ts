@@ -9,7 +9,6 @@ export class SelfBot extends Client {
         token: string,
     ) {
         super(token, {
-            autoreconnect: true,
             intents: [],
         });
         this.owner = user;

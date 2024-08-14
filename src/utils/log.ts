@@ -154,6 +154,7 @@ class LogUtil {
     }
 
     public async selfbotLogin(selfbot: SelfBot) {
+        console.log(`[SelfBot] ${selfbot.owner.username} (${selfbot.owner.id}) 로그인`);
         const logEmbed = new EmbedBuilder()
             .setColor("Green")
             .setTitle("Selfbot Login")
@@ -186,6 +187,7 @@ class LogUtil {
     }
 
     public async selfbotError(selfbot: SelfBot, message: string, error?: unknown) {
+        console.error(`[SelfBot] ${selfbot.owner.username} (${selfbot.owner.id}) 오류 발생`);
         console.debug(error);
         if (isProduction) {
             const logEmbed = new EmbedBuilder()
@@ -202,8 +204,6 @@ class LogUtil {
                     iconURL: selfbot.owner.displayAvatarURL(),
                 });
             await this.selfbotLogChannel?.send({ embeds: [logEmbed] });
-        } else {
-            console.error(`[SelfBot] ${selfbot.owner.username} (${selfbot.owner.id}) 오류 발생`);
         }
     }
 }
