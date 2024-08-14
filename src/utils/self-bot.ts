@@ -3,6 +3,7 @@ import type { GuildMember } from "discord.js";
 import { User } from "discord.js";
 import dbManager from "structure/DBManager";
 import { SelfBot } from "structure/SelfBot";
+import logUtil from "./log";
 
 const selfbots = new Map<string, SelfBot>();
 
@@ -23,9 +24,15 @@ export const loginSelfBot = async (user: User): Promise<boolean> => {
     if (token == null) return false;
 
     const selfbot = new SelfBot(user, token);
+    selfbot.on("ready", () => {
+        selfbot.editAFK(true);
+        selfbot.editStatus("idle");
+    });
+    selfbot.on("error", (error) => {
+        console.error(error);
+        logUtil.selfbotError(selfbot, "에러 발생", error).catch(console.error);
+    });
     await selfbot.connect();
-    selfbot.editAFK(true);
-    selfbot.editStatus("idle");
 
     selfbots.set(user.id, selfbot);
 
